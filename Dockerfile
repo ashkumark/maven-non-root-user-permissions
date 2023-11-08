@@ -14,6 +14,10 @@ WORKDIR $WORKING_DIR
 COPY src $WORKING_DIR/src
 COPY pom.xml $WORKING_DIR
 
+#Basic Utils
+RUN apt-get update
+RUN apt-get install -y wget curl jq unzip sudo tar acl apt-transport-https ca-certificates software-properties-common --no-install-recommends
+
 RUN groupadd $group -g $gid \
     && useradd -m $user -u $uid -g $gid -d $JENKINS_HOME
 
@@ -22,9 +26,7 @@ RUN usermod -aG sudo ${user}
 RUN chown -R $user:$group $JENKINS_HOME $WORKING_DIR
 RUN chmod -R ug+rwx $JENKINS_HOME $WORKING_DIR
 
-#Basic Utils
-RUN apt-get update
-RUN apt-get install -y wget curl jq unzip sudo tar acl apt-transport-https ca-certificates software-properties-common --no-install-recommends
+
 
 #Docker - https://docs.docker.com/engine/api/
 ENV DOCKER_CHANNEL stable
