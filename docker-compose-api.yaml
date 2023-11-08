@@ -11,13 +11,13 @@ services:
   # Version 7 -
   api-test-service:
     image: docker-jenkins-automation:latest
-    working_dir: /usr/src/test-project
+#    working_dir: /usr/src/test-project
 #    working_dir: /home/jenkins
     #user: ${HOST_UID_GID}
     networks:
       - rest
-    volumes:
-       - ./reports:/usr/src/test-project
+#    volumes:
+#       - ./reports:/usr/src/test-project
 #      - "$HOME/.m2:/root/.m2"
 #      - "$(pwd):/usr/src/test-project"
 #      - ./reports:/usr/src/test-project
