@@ -1,0 +1,186 @@
+[
+  {
+    "line": 4,
+    "elements": [
+      {
+        "start_timestamp": "2023-11-08T19:18:35.003Z",
+        "before": [
+          {
+            "result": {
+              "duration": 902820500,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.m2at.glue.api.ApiDemoFeatureGlue.beforeScenario()"
+            }
+          }
+        ],
+        "line": 7,
+        "name": "json placeholder scenario",
+        "description": "",
+        "id": "jsonplaceholder-demo;json-placeholder-scenario",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 225639000,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "the API for jsonplaceholder",
+            "match": {
+              "location": "com.m2at.glue.api.ApiDemoFeatureGlue.the_API_for_jsonplaceholder()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1414261600,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "I make a request to API",
+            "match": {
+              "location": "com.m2at.glue.api.ApiDemoFeatureGlue.i_make_a_request_to_API()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 32342100,
+              "status": "passed"
+            },
+            "line": 10,
+            "name": "the status code should be 200",
+            "match": {
+              "arguments": [
+                {
+                  "val": "200",
+                  "offset": 26
+                }
+              ],
+              "location": "com.m2at.glue.api.ApiDemoFeatureGlue.the_status_code_should_be(java.lang.Integer)"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@API"
+          },
+          {
+            "name": "@Regression"
+          }
+        ]
+      }
+    ],
+    "name": "jsonplaceholder demo",
+    "description": "",
+    "id": "jsonplaceholder-demo",
+    "keyword": "Feature",
+    "uri": "classpath:features/api/ApiDemofeature.feature",
+    "tags": [
+      {
+        "name": "@API",
+        "type": "Tag",
+        "location": {
+          "line": 3,
+          "column": 1
+        }
+      }
+    ]
+  },
+  {
+    "line": 4,
+    "elements": [
+      {
+        "start_timestamp": "2023-11-08T19:18:37.741Z",
+        "before": [
+          {
+            "result": {
+              "error_message": "java.lang.NullPointerException\n\tat java.base/java.util.Objects.requireNonNull(Objects.java:209)\n\tat org.openqa.selenium.support.ui.FluentWait.\u003cinit\u003e(FluentWait.java:106)\n\tat org.openqa.selenium.support.ui.WebDriverWait.\u003cinit\u003e(WebDriverWait.java:85)\n\tat org.openqa.selenium.support.ui.WebDriverWait.\u003cinit\u003e(WebDriverWait.java:45)\n\tat com.m2at.glue.ui.GooglePagetitleSteps.beforeScenario(GooglePagetitleSteps.java:107)\n",
+              "duration": 10547200,
+              "status": "failed"
+            },
+            "match": {
+              "location": "com.m2at.glue.ui.GooglePagetitleSteps.beforeScenario()"
+            }
+          }
+        ],
+        "line": 14,
+        "name": "Validate Page Title",
+        "description": "",
+        "id": "pagetitle;validate-page-title;;2",
+        "after": [
+          {
+            "result": {
+              "duration": 309200,
+              "status": "passed"
+            },
+            "match": {
+              "location": "com.m2at.glue.ui.GooglePagetitleSteps.afterScenario()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 344900,
+              "status": "skipped"
+            },
+            "line": 8,
+            "name": "I am on the homepage",
+            "match": {},
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 322100,
+              "status": "skipped"
+            },
+            "line": 9,
+            "name": "I search for \"iphone\"",
+            "match": {},
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 426100,
+              "status": "skipped"
+            },
+            "line": 10,
+            "name": "the page title should include \"iphone\"",
+            "match": {},
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI"
+          },
+          {
+            "name": "@Regression"
+          }
+        ]
+      }
+    ],
+    "name": "PageTitle",
+    "description": "",
+    "id": "pagetitle",
+    "keyword": "Feature",
+    "uri": "classpath:features/ui/UiGooglepagetitle.feature",
+    "tags": [
+      {
+        "name": "@UI",
+        "type": "Tag",
+        "location": {
+          "line": 3,
+          "column": 1
+        }
+      }
+    ]
+  }
+]
