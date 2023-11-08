@@ -18,8 +18,8 @@ services:
       - rest
     volumes:
       - "$HOME/.m2:/root/.m2"
-      - "$(pwd):/usr/src/test-project"
-#      - ./reports:/home/jenkins/target/
+#      - "$(pwd):/usr/src/test-project"
+      - ./reports:/usr/src/test-project
 #      - "$PWD/target:/home/jenkins/target"
 #      - "$HOME/.m2:/var/maven/.m2"
 #      - "$PWD:/home/jenkins"
