@@ -13,6 +13,8 @@ RUN mkdir -p $JENKINS_HOME
 WORKDIR $WORKING_DIR
 COPY src $WORKING_DIR/src
 COPY pom.xml $WORKING_DIR
+COPY runner-api.sh $WORKING_DIR
+COPY run-api-tests.sh $WORKING_DIR
 
 #Basic Utils
 RUN apt-get update
@@ -25,8 +27,6 @@ RUN usermod -aG sudo ${user}
 
 RUN chown -R $user:$group $JENKINS_HOME $WORKING_DIR
 RUN chmod -R ug+rwx $JENKINS_HOME $WORKING_DIR
-
-
 
 #Docker - https://docs.docker.com/engine/api/
 ENV DOCKER_CHANNEL stable
