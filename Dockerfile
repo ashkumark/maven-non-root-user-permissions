@@ -1,5 +1,5 @@
 
-FROM ghcr.io/carlossg/maven:3.9.5-amazoncorretto-17-al2023
+FROM ghcr.io/carlossg/maven:3.9.5-eclipse-temurin-17
 
 ENV user=jenkins
 ENV group=jenkins
