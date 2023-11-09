@@ -38,7 +38,9 @@ echo "* UP "
 docker-compose -f docker-compose-api.yaml up -d --no-color --build
 docker-compose -f docker-compose-api.yaml ps
 echo "* UP - sleeping for 180s.. check container"
-sleep 180s
+#sleep 180s
+
+echo "Container maven-5-api-test-service-1 created and exits.... (using project image created in previous stage)"
 
 #mkdir -p /home/jenkins/target
 #chown -R ${HOST_UID_GID} /home/jenkins/target
@@ -47,6 +49,7 @@ sleep 180s
 echo "* RUN "
 docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" api-test-service
 docker-compose -f docker-compose-api.yaml ps
+
 #docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" -v "$PWD:/home/jenkins" -v "$HOME/.m2:/root/.m2" -v "$PWD/target:/home/jenkins/target" api-test-service
 
 #docker-compose -p $COMPOSE_ID -f docker-compose-api.yaml run -e TYPE="@API" -u ${HOST_UID_GID} api-test-service --name "api"
