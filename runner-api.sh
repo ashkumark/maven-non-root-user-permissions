@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "* UP - sleeping for 180s.. check container"
+echo "* RUN - sleeping for 180s.. check container"
 sleep 180s
 
 echo "Run automated API tests (using runner script)..."
