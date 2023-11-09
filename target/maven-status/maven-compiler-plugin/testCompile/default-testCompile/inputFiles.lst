@@ -1,8 +1,0 @@
-/usr/src/mymaven/src/test/java/com/m2at/constants/Waits.java
-/usr/src/mymaven/src/test/java/com/m2at/utils/WebDriverFactory.java
-/usr/src/mymaven/src/test/java/com/m2at/utils/LoadProperties.java
-/usr/src/mymaven/src/test/java/com/m2at/constants/Environment.java
-/usr/src/mymaven/src/test/java/com/m2at/glue/api/ApiDemoFeatureGlue.java
-/usr/src/mymaven/src/test/java/com/m2at/constants/ConfigPath.java
-/usr/src/mymaven/src/test/java/com/m2at/testrunner/TestRunner.java
-/usr/src/mymaven/src/test/java/com/m2at/glue/ui/GooglePagetitleSteps.java
