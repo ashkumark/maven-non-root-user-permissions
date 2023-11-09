@@ -35,6 +35,8 @@ docker-compose -f docker-compose-api.yaml rm -f
 
 # Starting new stack environment
 docker-compose -f docker-compose-api.yaml up -d --no-color --build
+echo "* UP - sleeping for 180s.. check container"
+sleep 180s
 
 #mkdir -p /home/jenkins/target
 #chown -R ${HOST_UID_GID} /home/jenkins/target
@@ -42,7 +44,6 @@ docker-compose -f docker-compose-api.yaml up -d --no-color --build
 
 docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" api-test-service
 #docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" -v "$PWD:/home/jenkins" -v "$HOME/.m2:/root/.m2" -v "$PWD/target:/home/jenkins/target" api-test-service
-
 
 #docker-compose -p $COMPOSE_ID -f docker-compose-api.yaml run -e TYPE="@API" -u ${HOST_UID_GID} api-test-service --name "api"
 #docker exec api bash
