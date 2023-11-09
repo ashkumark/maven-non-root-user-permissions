@@ -1,7 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.m2at.testrunner.TestRunner
--------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 5.291 s <<< FAILURE! - in com.m2at.testrunner.TestRunner
-PageTitle.Validate Page Title  Time elapsed: 0.079 s  <<< ERROR!
-java.lang.NullPointerException
-
