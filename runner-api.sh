@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "* RUN - sleeping for 180s.. check container"
-sleep 180s
+#sleep 180s
 echo "Container  maven-5-api-test-service-run-57a0c7b69c06 created and alive...."
 
 echo "Run automated API tests (using runner script)..."
