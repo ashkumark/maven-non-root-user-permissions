@@ -37,5 +37,5 @@ echo "Copying target to workspace.."
 #apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin --no-install-recommends
 docker version
 #
-#echo "Copy target from docker container to workspace"
-#docker cp api-test-container:/home/docker-jenkins-test/target/ ${currentWorkspace}/reports/
+echo "Copy target from docker container to workspace"
+docker cp target $WORKSPACE/target
