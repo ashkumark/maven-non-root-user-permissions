@@ -23,7 +23,7 @@ pwd
 ls -lrt
 
 echo "Copying target to workspace.."
-cp -R ./target $WORKSPACE/target
+cp -R ./target /var/jenkins_home/*/*/target
 
 #cd target/
 #ls -lrt
