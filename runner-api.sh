@@ -2,7 +2,8 @@
 
 echo "* RUN - sleeping for 180s.. check container"
 #sleep 180s
-echo "Container  maven-5-api-test-service-run-57a0c7b69c06 created and alive...."
+echo "Container  *-api-test-service-run-* created and alive...."
+docker ps
 
 echo "Run automated API tests (using runner script)..."
 whoami
@@ -17,7 +18,7 @@ mvn test -Dcucumber.filter.tags=$TYPE
 echo "API tests run completed..."
 
 #version 2 - copy target from container to host
-#sleep 180s
+
 echo "Check permissions in runner"
 pwd
 ls -lrt
@@ -36,7 +37,8 @@ ls -lrt
 #apt-get update
 #apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin --no-install-recommends
 docker version
-#
+
 echo "Copy target from docker container to workspace"
+sleep 180s
 docker cp api-container:/target $WORKSPACE/target
 #docker cp api-container:target .
