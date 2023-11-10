@@ -22,7 +22,7 @@ echo "Check permissions in runner"
 pwd
 ls -lrt
 
-echo "Copying target to workspace.."
+#echo "Copying target to workspace.."
 #sleep 180s
 #cp -R ./target /var/jenkins_home/*/*/target
 
@@ -38,4 +38,5 @@ echo "Copying target to workspace.."
 docker version
 #
 echo "Copy target from docker container to workspace"
-docker cp target $WORKSPACE/target
+docker cp api-container:target $WORKSPACE/target
+#docker cp api-container:target .
