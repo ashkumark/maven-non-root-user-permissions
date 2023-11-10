@@ -22,6 +22,9 @@ echo "Check permissions in runner"
 pwd
 ls -lrt
 
+echo "Copying target to workspace.."
+cp -R ./target $WORKSPACE/target
+
 #cd target/
 #ls -lrt
 

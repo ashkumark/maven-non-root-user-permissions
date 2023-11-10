@@ -47,7 +47,9 @@ docker-compose -f docker-compose-api.yaml rm -f
 
 echo "* RUN "
 docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" api-test-service
-docker-compose -f docker-compose-api.yaml ps
+#docker-compose -f docker-compose-api.yaml ps
+
+
 
 #docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" -v "$PWD:/home/jenkins" -v "$HOME/.m2:/root/.m2" -v "$PWD/target:/home/jenkins/target" api-test-service
 
@@ -57,4 +59,4 @@ docker-compose -f docker-compose-api.yaml ps
 #exit
 
 echo "service - status.."
-docker-compose -f docker-compose-api.yaml ps -a
+docker-compose -f docker-compose-api.yaml ps
