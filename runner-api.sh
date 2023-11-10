@@ -34,4 +34,4 @@ ls -lrt
 #docker version
 #
 #echo "Copy target from docker container to workspace"
-#docker cp api-test-container:/home/docker-jenkins-test/target/ ${currentWorkspace}/reports/
+docker cp api-test-container:/home/docker-jenkins-test/target/ ${currentWorkspace}/reports/

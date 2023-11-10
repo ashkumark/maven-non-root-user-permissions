@@ -34,13 +34,12 @@ echo "User/Group ID - ${HOST_UID_GID}"
 docker-compose -f docker-compose-api.yaml rm -f
 
 # Starting new stack environment
-echo "* UP "
-docker-compose -f docker-compose-api.yaml up -d --no-color --build
-docker-compose -f docker-compose-api.yaml ps
-echo "* UP - sleeping for 180s.. check container"
+#docker-compose -f docker-compose-api.yaml up -d --no-color --build
+#docker-compose -f docker-compose-api.yaml ps
+#echo "* UP - sleeping for 180s.. check container"
 #sleep 180s
 
-echo "Container maven-5-api-test-service-1 created and exits.... (using project image created in previous stage)"
+#echo "Container maven-5-api-test-service-1 created and exits.... (using project image created in previous stage)"
 
 #mkdir -p /home/jenkins/target
 #chown -R ${HOST_UID_GID} /home/jenkins/target
