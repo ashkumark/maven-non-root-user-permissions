@@ -62,6 +62,9 @@ pipeline {
                       whoami
                       pwd
                       ls -lrt
+                      echo "Target directory.."
+                      mkdir -p target
+                        
                       docker ps 
                       docker-compose config
                       echo "printenv"

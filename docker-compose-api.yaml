@@ -16,8 +16,8 @@ services:
     #user: ${HOST_UID_GID}
     networks:
       - rest
-#    volumes:
-#       - "$WORKSPACE/target:/usr/src/test-project/target"
+    volumes:
+       - "$WORKSPACE/target:/usr/src/test-project/target"
 #      - "$HOME/.m2:/root/.m2"
 #      - "$(pwd):/usr/src/test-project"
 #      - ./reports:/usr/src/test-project
