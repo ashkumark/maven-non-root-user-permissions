@@ -23,7 +23,8 @@ pwd
 ls -lrt
 
 echo "Copying target to workspace.."
-cp -R ./target /var/jenkins_home/*/*/target
+#sleep 180s
+#cp -R ./target /var/jenkins_home/*/*/target
 
 #cd target/
 #ls -lrt
@@ -34,7 +35,7 @@ cp -R ./target /var/jenkins_home/*/*/target
 #echo "Installing docker"
 #apt-get update
 #apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin --no-install-recommends
-#docker version
+docker version
 #
 #echo "Copy target from docker container to workspace"
 #docker cp api-test-container:/home/docker-jenkins-test/target/ ${currentWorkspace}/reports/
