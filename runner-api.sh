@@ -38,5 +38,5 @@ ls -lrt
 docker version
 #
 echo "Copy target from docker container to workspace"
-docker cp api-container:target $WORKSPACE/target
+docker cp api-container:/target $WORKSPACE/target
 #docker cp api-container:target .
