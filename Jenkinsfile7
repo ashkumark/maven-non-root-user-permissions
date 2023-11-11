@@ -94,7 +94,7 @@ pipeline {
                          dockerComposeFile: 'docker-compose-api.yaml',
                          option: [$class: 'ExecuteCommandInsideContainer',
                          command: '-e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh"',
-                                  index: 1,
+                                  index: 0,
                                   privilegedMode: true,
                                   service: 'api-test-service',
                                   workDir: ''],
