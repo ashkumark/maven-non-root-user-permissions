@@ -12,9 +12,9 @@ ls -lrt
 mvn -version
 #chown -R 1001:1001 /home/jenkins
 
-mvn -f pom.xml test -Dtest=TestRunner -Dcucumber.filter.tags=@API
+#mvn -f pom.xml test -Dtest=TestRunner -Dcucumber.filter.tags=@API
 #mvn clean test -Dtest=TestRunner -Dcucumber.filter.tags=$TYPE
-#mvn test -Dcucumber.filter.tags=$TYPE
+mvn test -Dcucumber.filter.tags=$TYPE
 #mvn test -Dcucumber.filter.tags=@API
 echo "API tests run completed..."
 
@@ -39,7 +39,7 @@ ls -lrt
 #apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin --no-install-recommends
 docker version
 
-echo "Copy target from docker container to workspace"
+#echo "Copy target from docker container to workspace"
 #sleep 180s
 
 #docker cp api-container:/target /var/jenkins_home/*/*/target
