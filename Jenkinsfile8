@@ -73,7 +73,7 @@ pipeline {
                   docker ps 
                   docker-compose config
                   docker-compose -p ${TAG} -f docker-compose-api.yaml up -d --no-color --build
-                  docker-compose -p ${TAG} -f docker-compose-api.yaml run -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID api-test-service
+                  docker-compose -p ${TAG} -f docker-compose-api.yaml run -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID --entrypoint="./runner-api.sh" api-test-service
                   docker ps 
                 """
             }

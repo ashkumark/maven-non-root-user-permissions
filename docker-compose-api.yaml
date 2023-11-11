@@ -14,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: /bin/sh -c "./runner-api.sh"
+#    command: /bin/sh -c "./runner-api.sh"
     networks:
       - rest
     working_dir: /var/jenkins_home/workspace/maven-jf-8/reports
