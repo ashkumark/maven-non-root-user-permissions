@@ -41,5 +41,5 @@ docker version
 echo "Copy target from docker container to workspace"
 #sleep 180s
 
-docker cp api-container:/target /var/jenkins_home/*/*/target
+#docker cp api-container:/target /var/jenkins_home/*/*/target
 #docker cp api-container:target .
