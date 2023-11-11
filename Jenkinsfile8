@@ -75,15 +75,6 @@ pipeline {
             }
         }
 
-
-        stage('Stop all containers') {
-            steps {
-                sh """
-                    docker-compose -p ${TAG} rm -f
-                """
-            }
-        }
-
 /*        stage('Build Image') {
             steps {
                 script {
