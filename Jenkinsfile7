@@ -51,7 +51,7 @@ pipeline {
                     label 'project-source-code-workspace-container'
                     args '-v $HOME/.m2:/root/.m2'
                     //args '-v $HOME/.m2:/var/maven/.m2'
-                    customWorkspace '/usr/src/test-project'
+                    //customWorkspace '/usr/src/test-project'
                     reuseNode true
                 }
             }
@@ -86,11 +86,15 @@ pipeline {
                         pwd
                         ls -lrt
                         docker ps 
-                        chown -R $JENKINS_USER_ID:$JENKINS_GROUP_ID ./run-api-tests.sh
-                        chmod ug+x ./run-api-tests.sh
-                        echo "run-api-tests.sh.."
-                        ./run-api-tests.sh
-                        docker ps 
+                        echo "Switch to workspace.."
+                        dir('/var/jenkins_home/workspace/${JOB_NAME}/') {
+                            chown -R $JENKINS_USER_ID:$JENKINS_GROUP_ID ./run-api-tests.sh
+                            chmod ug+x ./run-api-tests.sh
+                            echo "run-api-tests.sh.."
+                            ./run-api-tests.sh
+                            docker ps 
+                         }
+                        
                 '''
                 /*script {
                     echo "Docker compose run.."
