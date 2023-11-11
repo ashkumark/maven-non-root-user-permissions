@@ -81,14 +81,24 @@ pipeline {
                     docker ps 
                 '''
 
-                echo "Switch to workspace.."
+/*                echo "Switch to workspace.."
                 dir('/var/jenkins_home/workspace/${JOB_NAME}') {
                     sh 'chown -R $JENKINS_USER_ID:$JENKINS_GROUP_ID ./run-api-tests.sh'
                     sh 'chmod ug+x ./run-api-tests.sh'
                     echo "run-api-tests.sh.."
                     sh './run-api-tests.sh'
                     docker ps
-                }
+                }*/
+
+                step([$class: 'DockerComposeBuilder',
+                         dockerComposeFile: 'docker-compose-api.yaml',
+                         option: [$class: 'ExecuteCommandInsideContainer',
+                         command: '-e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh"',
+                                  index: 1,
+                                  privilegedMode: true,
+                                  service: 'api-test-service',
+                                  workDir: ''],
+                         useCustomDockerComposeFile: true])
             }
         }
 
