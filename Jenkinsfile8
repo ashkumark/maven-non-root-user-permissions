@@ -72,49 +72,16 @@ pipeline {
                   docker-compose p ${TAG} -f docker-compose-api.yaml run -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID api-test-service
                 """
                 }
-
-                publishHTML target: [
-                        allowMissing         : false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll              : true,
-                        reportDir            : "reports/target/Reports/",
-                        reportFiles          : 'automated-test-report.html',
-                        reportName           : 'Extent Test Report'
-                ]
-                publishHTML target: [
-                        allowMissing         : false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll              : true,
-                        reportDir            : "reports/target/cucumber-html-report/",
-                        reportFiles          : 'regression-tests.html',
-                        reportName           : 'Cucumber Test Report'
-                ]
-                cucumber buildStatus: '',
-                        reportTitle: 'Cucumber report',
-                        fileIncludePattern: '**/*.json',
-                        jsonReportDirectory: "reports/target",
-                        trendsLimit: 10,
-                        classifications: [
-                                [
-                                        'key'  : 'API',
-                                        'value': 'API'
-                                ]
-                        ]
-
-                sh """#!/bin/bash
-                    # Stop and remove the containers
-                    docker-compose -p ${TAG} down
-                  """
             }
         }
 
-/*        stage('Stop all containers') {
+        stage('Stop all containers') {
             steps {
                 sh """
-                    docker-compose down
+                    docker-compose -p ${TAG} down
                 """
             }
-        }*/
+        }
 
 /*        stage('Build Image') {
             steps {
