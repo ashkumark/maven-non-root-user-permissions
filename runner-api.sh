@@ -15,7 +15,7 @@ mvn -version
 #mvn -f pom.xml test -Dtest=TestRunner -Dcucumber.filter.tags=$TYPE
 #mvn clean test -Dtest=TestRunner -Dcucumber.filter.tags=$TYPE
 #mvn test -Dcucumber.filter.tags=$TYPE
-mvn test -Dcucumber.filter.tags="@API"
+mvn test -Dcucumber.filter.tags=@API
 echo "API tests run completed..."
 
 #version 2 - copy target from container to host
