@@ -82,8 +82,8 @@ pipeline {
 
                 echo "Switch to workspace.."
                 dir('/var/jenkins_home/workspace/${JOB_NAME}') {
-                    chown -R $JENKINS_USER_ID:$JENKINS_GROUP_ID ./run-api-tests.sh
-                            chmod ug+x ./run-api-tests.sh
+                    sh 'chown -R $JENKINS_USER_ID:$JENKINS_GROUP_ID ./run-api-tests.sh'
+                    sh 'chmod ug+x ./run-api-tests.sh'
                     echo "run-api-tests.sh.."
                     sh './run-api-tests.sh'
                     docker ps
