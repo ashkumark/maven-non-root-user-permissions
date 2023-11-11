@@ -17,10 +17,10 @@ services:
     command: /bin/sh -c "./runner-api.sh"
     networks:
       - rest
-    working_dir: $WORKSPACE/reports
+    working_dir: /var/jenkins_home/workspace/maven-jf-8/reports
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./:$WORKSPACE/reports
+      - ./:/var/jenkins_home/workspace/maven-jf-8/reports
     environment:
       - TYPE="@API"
 #    entrypoint: ./runner-api.sh
