@@ -60,7 +60,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile'
                     args '-v $HOME/.m2:/root/.m2'
-                    customWorkspace '/usr/src/test-project'
+                   // customWorkspace '/usr/src/test-project'
                     reuseNode true
                 }
             }
