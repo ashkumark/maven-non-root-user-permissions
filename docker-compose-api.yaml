@@ -19,7 +19,7 @@ services:
       - rest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./reports:/usr/src/test-project/target
+#      - ./reports:/usr/src/test-project/target
     environment:
       - TYPE="@API"
     entrypoint: ./runner-api.sh
