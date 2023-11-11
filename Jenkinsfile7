@@ -79,6 +79,8 @@ pipeline {
                     pwd
                     ls -lrt
                     docker ps 
+                    docker-compose -f docker-compose-api.yaml rm -f
+                    docker-compose -f docker-compose-api.yaml up -d --no-color --build
                 '''
 
 /*                echo "Switch to workspace.."
