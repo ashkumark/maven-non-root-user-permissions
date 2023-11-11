@@ -15,10 +15,12 @@ services:
 #    working_dir: /usr/src/test-project
 #    working_dir: /home/jenkins
     #user: ${HOST_UID_GID}
+    command: ./runner-api.sh
     networks:
       - rest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - {WORKSPACE}/reports:/usr/src/test-project/target
 #       - "$WORKSPACE/target:/usr/src/test-project/target"
 #      - "$HOME/.m2:/root/.m2"
 #      - "$(pwd):/usr/src/test-project"
@@ -26,7 +28,6 @@ services:
 #      - "$PWD/target:/home/jenkins/target"
 #      - "$HOME/.m2:/var/maven/.m2"
 #      - "$PWD:/home/jenkins"
-
     environment:
       - TYPE="@API"
 #   command: /bin/sh -c "./runner-api.sh"
