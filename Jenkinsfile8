@@ -40,6 +40,11 @@ pipeline {
                 sh '''#!/bin/bash -e
                 git clean -dfx
                 mkdir reports
+                chown -R $JENKINS_USER_ID:$JENKINS_GROUP_ID reports
+                chmod -R ug+rwx reports
+                whoami
+                pwd
+                ls -lrt
             '''
             }
         }
