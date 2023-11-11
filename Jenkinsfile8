@@ -60,7 +60,7 @@ pipeline {
                     reuseNode true
                 }
             }
-            try {
+
                 steps {
                     sh """#!/bin/bash -e
                   docker version
@@ -72,7 +72,7 @@ pipeline {
                   docker-compose p ${TAG} -f docker-compose-api.yaml run -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID api-test-service
                 """
                 }
-            } finally {
+
                 publishHTML target: [
                         allowMissing         : false,
                         alwaysLinkToLastBuild: false,
@@ -229,7 +229,7 @@ pipeline {
             cleanWs()
         }
     }
-}
+
 
 
 
