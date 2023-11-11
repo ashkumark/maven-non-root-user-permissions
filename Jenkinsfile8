@@ -6,6 +6,7 @@ pipeline {
         JENKINS_USER_ID = "${sh(script: 'id -u', returnStdout: true).trim()}"
         JENKINS_GROUP_ID = "${sh(script: 'id -g', returnStdout: true).trim()}"
         currentWorkspace = ''
+        TAG = "demo_${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
     }
 
     options {
@@ -50,6 +51,7 @@ pipeline {
         }
 
         stage('Build an image with Tests') {
+
             agent {
                 dockerfile {
                     filename 'Dockerfile'
@@ -57,34 +59,61 @@ pipeline {
                     reuseNode true
                 }
             }
-            steps {
-                sh """
+            try {
+                steps {
+                    sh """#!/bin/bash -e
                   docker version
                   docker info
                   docker-compose version
-                    docker ps 
-                    docker-compose -f docker-compose-api.yaml build api-test-service:{BUILD_NUMBER}
+                  docker ps 
+                  docker-compose config
+                  docker-compose -p ${TAG} -f docker-compose-api.yaml up -d build
+                  docker-compose p ${TAG} -f docker-compose-api.yaml run -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID api-test-service
                 """
+                }
+            } finally {
+                publishHTML target: [
+                        allowMissing         : false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll              : true,
+                        reportDir            : "reports/target/Reports/",
+                        reportFiles          : 'automated-test-report.html',
+                        reportName           : 'Extent Test Report'
+                ]
+                publishHTML target: [
+                        allowMissing         : false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll              : true,
+                        reportDir            : "reports/target/cucumber-html-report/",
+                        reportFiles          : 'regression-tests.html',
+                        reportName           : 'Cucumber Test Report'
+                ]
+                cucumber buildStatus: '',
+                        reportTitle: 'Cucumber report',
+                        fileIncludePattern: '**/*.json',
+                        jsonReportDirectory: "reports/target",
+                        trendsLimit: 10,
+                        classifications: [
+                                [
+                                        'key'  : 'API',
+                                        'value': 'API'
+                                ]
+                        ]
+
+                sh """#!/bin/bash
+                    # Stop and remove the containers
+                    docker-compose -p ${TAG} down
+                  """
             }
         }
 
-        stage('Run Docker Compose') {
-            steps {
-                sh """#!/bin/bash -e
-
-                docker-compose config
-                docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID api-test-service:{BUILD_NUMBER}
-                """
-            }
-        }
-
-        stage('Stop all containers') {
+/*        stage('Stop all containers') {
             steps {
                 sh """
                     docker-compose down
                 """
             }
-        }
+        }*/
 
 /*        stage('Build Image') {
             steps {
