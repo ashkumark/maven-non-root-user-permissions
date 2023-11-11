@@ -61,8 +61,8 @@ pipeline {
                 }
             }
 
-                steps {
-                    sh """#!/bin/bash -e
+            steps {
+                sh """#!/bin/bash -e
                   docker version
                   docker info
                   docker-compose version
@@ -71,9 +71,9 @@ pipeline {
                   docker-compose -p ${TAG} -f docker-compose-api.yaml up -d build
                   docker-compose p ${TAG} -f docker-compose-api.yaml run -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID api-test-service
                 """
-                }
             }
         }
+
 
         stage('Stop all containers') {
             steps {
@@ -196,7 +196,7 @@ pipeline {
             cleanWs()
         }
     }
-
+}
 
 
 
