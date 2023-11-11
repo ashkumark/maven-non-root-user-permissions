@@ -50,9 +50,16 @@ pipeline {
         }
 
         stage('Build an image with Tests') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    args '-v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
             steps {
                 sh """
-                    docker-compose build api-test-service:{BUILD_NUMBER}
+                    docker-compose -f docker-compose-api.yaml build api-test-service:{BUILD_NUMBER}
                 """
             }
         }
