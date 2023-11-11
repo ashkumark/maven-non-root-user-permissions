@@ -59,6 +59,10 @@ pipeline {
             }
             steps {
                 sh """
+                  docker version
+                  docker info
+                  docker-compose version
+                    docker ps 
                     docker-compose -f docker-compose-api.yaml build api-test-service:{BUILD_NUMBER}
                 """
             }
@@ -67,6 +71,8 @@ pipeline {
         stage('Run Docker Compose') {
             steps {
                 sh """#!/bin/bash -e
+
+                docker-compose config
                 docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID api-test-service:{BUILD_NUMBER}
                 """
             }
