@@ -7,7 +7,7 @@ pipeline {
         JENKINS_USER_ID = "${sh(script: 'id -u', returnStdout: true).trim()}"
         JENKINS_GROUP_ID = "${sh(script: 'id -g', returnStdout: true).trim()}"
         currentWorkspace = ''
-        TAG = "demo_${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
+        TAG = "demo_${env.JOB_NAME}_${env.BUILD_NUMBER}"
     }
 
     options {
@@ -79,7 +79,7 @@ pipeline {
         stage('Stop all containers') {
             steps {
                 sh """
-                    docker-compose -p ${TAG} down
+                    docker-compose -p ${TAG} rm -f
                 """
             }
         }
