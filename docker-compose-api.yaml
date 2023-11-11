@@ -11,7 +11,9 @@ services:
   # Version 7 -
   api-test-service:
     container_name: api-test-container
-    build: src/test/.
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: /bin/sh -c "./runner-api.sh"
     networks:
       - rest
