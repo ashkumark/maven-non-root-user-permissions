@@ -2,7 +2,8 @@
 .project
 .settings/
 target/
-
+.idea
+*.iml
 # Compiled class file
 *.class
 
