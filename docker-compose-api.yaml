@@ -11,6 +11,7 @@ services:
   # Version 7 -
   api-test-service:
     container_name: api-test-container
+    working_dir: $WORKSPACE/reports
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,7 +20,7 @@ services:
       - rest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#      - ./reports:/usr/src/test-project/target
+      - .:$WORKSPACE/reports
     environment:
       - TYPE="@API"
     entrypoint: ./runner-api.sh
