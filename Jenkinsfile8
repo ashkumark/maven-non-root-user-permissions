@@ -56,11 +56,11 @@ pipeline {
         }
 
         stage('Build an image with Tests') {
-
             agent {
                 dockerfile {
                     filename 'Dockerfile'
                     args '-v $HOME/.m2:/root/.m2'
+                    customWorkspace '/usr/src/test-project'
                     reuseNode true
                 }
             }
@@ -73,7 +73,7 @@ pipeline {
                   docker ps 
                   docker-compose config
                   docker-compose -p ${TAG} -f docker-compose-api.yaml up -d --no-color --build
-                  docker-compose -p ${TAG} -f docker-compose-api.yaml run -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID -v ./reports:/usr/src/test-project/target -w /usr/src/test-project api-test-service
+                  docker-compose -p ${TAG} -f docker-compose-api.yaml run -e TYPE="@API" -u $JENKINS_USER_ID:$JENKINS_GROUP_ID api-test-service
                   docker ps 
                 """
             }
