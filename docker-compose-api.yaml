@@ -20,7 +20,7 @@ services:
       - rest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - .:$WORKSPACE/reports
+      - ./reports:$WORKSPACE/reports
     environment:
       - TYPE="@API"
     entrypoint: ./runner-api.sh
