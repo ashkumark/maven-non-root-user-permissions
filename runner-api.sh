@@ -1,11 +1,13 @@
 #!/bin/bash
 
-echo "* RUN - sleeping for 180s.. check container"
-#sleep 180s
+echo "* RUN .. check container"
 echo "Container  *-api-test-service-run-* created and alive...."
 docker ps
 
 echo "Run automated API tests (using runner script)..."
+echo "* Sleeping.."
+sleep 1h 1m
+
 whoami
 pwd
 ls -lrt
