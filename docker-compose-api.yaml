@@ -8,22 +8,35 @@ volumes:
   reports-api-volume:
  
 services:
-  # Version 7 -
+#Version 9 -
   api-test-service:
+    image: docker-jenkins-automation:latest
     container_name: api-test-container
-    build:
-      context: .
-      dockerfile: Dockerfile
-#    command: /bin/sh -c "./runner-api.sh"
+    command: /bin/sh -c "./runner-api.sh"
     networks:
       - rest
-    working_dir: /var/jenkins_home/workspace/maven-jf-8/reports
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./:/var/jenkins_home/workspace/maven-jf-8/reports
+#      - ./reports:/usr/src/test-project/target
     environment:
       - TYPE="@API"
-#    entrypoint: ./runner-api.sh
+
+#  # Version 8 -
+#  api-test-service:
+#    container_name: api-test-container
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+##    command: /bin/sh -c "./runner-api.sh"
+#    networks:
+#      - rest
+#    working_dir: /var/jenkins_home/workspace/maven-jf-8/reports
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - ./:/var/jenkins_home/workspace/maven-jf-8/reports
+#    environment:
+#      - TYPE="@API"
+##    entrypoint: ./runner-api.sh
 
 # Version 7 -
 #api-test-service:
