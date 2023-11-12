@@ -22,8 +22,7 @@ echo "API tests run completed..."
 
 #version 2 - copy target from container to host
 
-echo "Check permissions in runner"
-pwd
+echo "List files - shows target"
 ls -lrt
 
 #echo "Copying target to workspace.."
