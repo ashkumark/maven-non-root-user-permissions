@@ -17,7 +17,7 @@ services:
       - rest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - $HOME/.m2:/root/.m2
+#      - $HOME/.m2:/root/.m2
 #      - ./reports:/usr/src/test-project/target
     environment:
       - TYPE="@API"
