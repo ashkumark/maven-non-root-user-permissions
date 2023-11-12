@@ -59,8 +59,7 @@ pipeline {
                 sh '''#!/bin/bash
                       echo "Check permissions 1"
                       echo "* Reuse node using new image "
-                      echo "Within container using workspace as working directory..sleeping.."
-                      sleep 1h
+                      echo "Within container using workspace as working directory.."
                       whoami
                       pwd
                       ls -lrt
@@ -72,11 +71,27 @@ pipeline {
                       echo "printenv"
                       printenv
                 '''
+
+
 /*                sh 'docker-compose -f docker-compose-api.yaml up -d --no-color --no-build'
                 sh 'docker-compose -f docker-compose-api.yaml ps'
                 sh 'docker-compose -f docker-compose-api.yaml run -e TYPE="@API" api-test-service'*/
 
                 sh '''#!/bin/bash
+                        echo "Change script permissions"
+                        chmod ug+x ./run-api-tests.sh
+                        chmod ug+x ./runner-api.sh
+
+                        echo "run-api-tests.sh.."
+                        
+                        echo "* Sleeping.."
+                        sleep 1h 1m
+                        
+                        ./run-api-tests.sh
+                        docker ps 
+                '''
+
+/*                sh '''#!/bin/bash
                         echo "Check permissions 2"
 
                         chown -R $JENKINS_USER_ID:$JENKINS_GROUP_ID "$WORKSPACE"
@@ -90,7 +105,7 @@ pipeline {
                         echo "run-api-tests.sh.."
                         ./run-api-tests.sh
                         docker ps 
-                '''
+                '''*/
                 /*script {
                     echo "Docker compose run.."
                     sh 'chmod +x -R ${env.WORKSPACE}'
