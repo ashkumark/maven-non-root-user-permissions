@@ -6,7 +6,7 @@ docker ps
 
 echo "Run automated API tests (using runner script)..."
 echo "* Sleeping.."
-sleep 1h 1m
+#sleep 10h 1m
 
 whoami
 pwd
@@ -19,6 +19,9 @@ mvn -version
 mvn test -Dcucumber.filter.tags=$TYPE
 #mvn test -Dcucumber.filter.tags=@API
 echo "API tests run completed..."
+
+echo "* Sleeping.."
+#sleep 10h 1m
 
 #version 2 - copy target from container to host
 
@@ -45,3 +48,6 @@ docker version
 
 #docker cp api-container:/target /var/jenkins_home/*/*/target
 #docker cp api-container:target .
+
+echo "* reports-api-volume.."
+docker run -it --rm -v reports-api-volume:/vol busybox ls -lrt /vol

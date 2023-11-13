@@ -46,10 +46,13 @@ docker-compose -f docker-compose-api.yaml rm -f
 #chmod -R ug+rwx /home/jenkins/target
 
 echo "* RUN "
-#docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" api-test-service
+docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" api-test-service
 #docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" -v "$PWD/target:/home/jenkins/target" api-test-service
 #docker-compose -f docker-compose-api.yaml ps
-docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --project-directory="/var/jenkins_home/workspace/maven-6" --entrypoint="./runner-api.sh" api-test-service
+#docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --project-directory="/var/jenkins_home/workspace/maven-6" --entrypoint="./runner-api.sh" api-test-service
+#docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u 1001:1001 --project-directory="/var/jenkins_home/workspace/maven-6" --entrypoint="./runner-api.sh" api-test-service
+
+#docker-compose --project-directory "/var/jenkins_home/workspace/maven-6" -f docker-compose-api.yaml -p api-project run -d --entrypoint="./runner-api.sh" api-test-service
 
 #docker-compose -f /var/jenkins_home/workspace/maven-9/docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" api-test-service
 
