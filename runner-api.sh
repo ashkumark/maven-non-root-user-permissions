@@ -45,4 +45,4 @@ docker version
 #docker cp api-container:target .
 
 echo "* reports-api-volume.."
-docker run -it --rm -v reports-api-volume:/vol busybox ls -lrt /vol
+docker run -i --rm -v reports-api-volume:/vol busybox ls -lrt /vol
