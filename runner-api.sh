@@ -5,8 +5,6 @@ echo "Container  *-api-test-service-run-* created and alive...."
 docker ps
 
 echo "Run automated API tests (using runner script)..."
-echo "* Sleeping.."
-#sleep 10h 1m
 
 whoami
 pwd
@@ -19,9 +17,6 @@ mvn -version
 mvn test -Dcucumber.filter.tags=$TYPE
 #mvn test -Dcucumber.filter.tags=@API
 echo "API tests run completed..."
-
-echo "* Sleeping.."
-#sleep 10h 1m
 
 #version 2 - copy target from container to host
 
