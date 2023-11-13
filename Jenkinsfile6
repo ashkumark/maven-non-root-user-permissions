@@ -82,11 +82,7 @@ pipeline {
                         chmod ug+x ./run-api-tests.sh
                         chmod ug+x ./runner-api.sh
 
-                        echo "run-api-tests.sh.."
-                        
-                        echo "* Sleeping.."
-                        sleep 1h 1m
-                        
+                        echo "run-api-tests.sh.."                        
                         ./run-api-tests.sh
                         docker ps 
                 '''
