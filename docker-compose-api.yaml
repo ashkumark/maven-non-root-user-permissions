@@ -14,14 +14,10 @@ services:
     image: docker-jenkins-automation:latest
     container_name: api-test-container
     working_dir: /usr/src/test-project
-#    command: /bin/sh -c "./runner-api.sh"
     networks:
       - rest
     volumes:
-      - reports-api-volume:/usr/src/test-project
       - /var/run/docker.sock:/var/run/docker.sock
-#      - $HOME/.m2:/root/.m2
-#      - ./reports:/usr/src/test-project/target
     environment:
       - TYPE="@API"
 

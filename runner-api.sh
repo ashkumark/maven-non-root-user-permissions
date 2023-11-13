@@ -43,6 +43,3 @@ docker version
 
 #docker cp api-container:/target /var/jenkins_home/*/*/target
 #docker cp api-container:target .
-
-echo "* reports-api-volume.."
-docker run --rm -v reports-api-volume:/vol busybox ls -lrt /vol
