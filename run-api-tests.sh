@@ -31,10 +31,10 @@ echo "User/Group ID - ${HOST_UID_GID}"
 
 
 # Remove Previous Stack
-docker-compose -f docker-compose-api.yaml rm -f
+#docker-compose -f docker-compose-api.yaml rm -f
 
 # Starting new stack environment
-#docker-compose -f docker-compose-api.yaml up -d --no-color --build
+docker-compose -f docker-compose-api.yaml up -d --no-color --build
 #docker-compose -f docker-compose-api.yaml ps
 #echo "* UP - sleeping for 180s.. check container"
 #sleep 180s
