@@ -46,7 +46,7 @@ docker-compose -f docker-compose-api.yaml rm -f
 #chmod -R ug+rwx /home/jenkins/target
 
 echo "* RUN "
-docker-compose -f docker-compose-api.yaml run -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" api-test-service
+docker-compose -f docker-compose-api.yaml run -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" -v /var/run/docker.sock:/var/run/docker.sock api-test-service
 #docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --entrypoint="./runner-api.sh" -v "$PWD/target:/home/jenkins/target" api-test-service
 #docker-compose -f docker-compose-api.yaml ps
 #docker-compose -f docker-compose-api.yaml run --rm -e TYPE="@API" -u ${HOST_UID_GID} --project-directory="/var/jenkins_home/workspace/maven-6" --entrypoint="./runner-api.sh" api-test-service
