@@ -55,6 +55,7 @@ pipeline {
                     //args '-v /usr/src/test-project:/var/jenkins_home/workspace/maven-jf6'
                     //args '-v $HOME/.m2:/var/maven/.m2'
                     args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    args '-v $PWD:$WORKSPACE'
                     reuseNode true
                 }
             }

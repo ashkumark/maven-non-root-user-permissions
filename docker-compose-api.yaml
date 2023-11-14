@@ -18,8 +18,8 @@ services:
       - rest
     environment:
       - TYPE="@API"
-#    volumes:
-#      - ./output:/usr/src/test-project
+    volumes:
+      - /home/jenkins/volumes/node/output:/usr/src/test-project
   #    volumes:
   #      - /var/run/docker.sock:/var/run/docker.sock
     command: /bin/sh -c ./runner-api.sh
