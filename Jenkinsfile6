@@ -149,7 +149,7 @@ pipeline {
                     reportName           : 'Cucumber Test Report'
             ]*/
 
-            archiveArtifacts artifacts: '/usr/src/test-project/target/Reports/automated-test-report.html', fingerprint: true
+            archiveArtifacts artifacts: 'target/Reports/automated-test-report.html', fingerprint: true
 
             cleanWs()
         }
