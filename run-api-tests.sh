@@ -34,7 +34,7 @@ echo "User/Group ID - ${HOST_UID_GID}"
 #docker-compose -f docker-compose-api.yaml rm -f
 
 # Starting new stack environment
-docker-compose -f docker-compose-api.yaml up -d --no-color --build
+docker-compose -f docker-compose-api.yaml up -d -v /var/run/docker.sock:/var/run/docker.sock --no-color --build
 #docker-compose -f docker-compose-api.yaml ps
 #echo "* UP - sleeping for 180s.. check container"
 #sleep 180s
