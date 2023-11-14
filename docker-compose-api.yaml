@@ -17,7 +17,7 @@ services:
     networks:
       - rest
     volumes:
-    - ./home/jenkins/volumes/node/output:/usr/src/test-project
+    - ./output:/usr/src/test-project
 #    volumes:
 #      - /var/run/docker.sock:/var/run/docker.sock
     environment:
