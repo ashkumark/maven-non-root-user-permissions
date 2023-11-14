@@ -131,7 +131,7 @@ pipeline {
 
     post {
         always {
-            // publish html reports
+/*            // publish html reports
             publishHTML target: [
                     allowMissing         : false,
                     alwaysLinkToLastBuild: false,
@@ -147,7 +147,9 @@ pipeline {
                     reportDir            : "${currentWorkspace}/target/cucumber-html-report/",
                     reportFiles          : 'regression-tests.html',
                     reportName           : 'Cucumber Test Report'
-            ]
+            ]*/
+
+            archiveArtifacts artifacts: '/usr/src/test-project/target/Reports/automated-test-report.html', fingerprint: true
 
             cleanWs()
         }
