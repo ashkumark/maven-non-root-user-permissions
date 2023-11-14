@@ -13,15 +13,13 @@ services:
     privileged: true
     image: docker-jenkins-automation:latest
     container_name: api-test-container
-#    working_dir: /usr/src/test-project
+    working_dir: /usr/src/test-project
     networks:
       - rest
     environment:
       - TYPE="@API"
     volumes:
       - ./:/usr/src/test-project
-  #    volumes:
-  #      - /var/run/docker.sock:/var/run/docker.sock
     command: /bin/sh -c ./runner-api.sh
 
 #  # Version 8 -
