@@ -113,6 +113,7 @@ pipeline {
             publishHTML target: [
                     allowMissing         : false,
                     alwaysLinkToLastBuild: false,
+                    includes             : '**/*.json',
                     keepAll              : true,
                     reportDir            : "${currentWorkspace}/target/Reports/",
                     reportFiles          : 'automated-test-report.html',
@@ -121,6 +122,7 @@ pipeline {
             publishHTML target: [
                     allowMissing         : false,
                     alwaysLinkToLastBuild: false,
+                    includes             : '**/*.json',
                     keepAll              : true,
                     reportDir            : "${currentWorkspace}/target/cucumber-html-report/",
                     reportFiles          : 'regression-tests.html',
