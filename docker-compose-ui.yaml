@@ -61,6 +61,6 @@ services:
       - HUB_HOST=selenium-hub
       - BROWSER=chrome
       - TYPE="@UI"
-    entrypoint: ./runner.sh
+    entrypoint: ./runner-ui.sh
 
     
