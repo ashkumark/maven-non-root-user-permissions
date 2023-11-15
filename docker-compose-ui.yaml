@@ -1,0 +1,66 @@
+version: "3.8"
+
+networks: 
+  grid:
+  
+#volumes:
+#  reports-volume:
+ 
+services:
+  selenium-hub-service:    
+    image: selenium/hub:3.141.59
+    container_name: selenium-hub
+    networks:
+      - grid
+    ports:
+      - "4444:4444"
+   
+  chrome-service:  
+    image: selenium/node-chrome:3.141.59
+    networks:
+      - grid
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub-service
+    environment:
+      - HUB_HOST=selenium-hub
+    ports:
+     - 5901
+    expose:
+     - "5901"
+
+  firefox-service: 
+    image: selenium/node-firefox:3.141.59
+    networks:
+      - grid
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub-service
+    environment:
+      - HUB_HOST=selenium-hub
+    ports:
+     - 5901
+    expose:
+     - "5901"
+
+  ui-test-service:
+    image: docker-jenkins-automation:latest
+    container_name: ui-test-container
+    networks:
+      - grid
+    volumes:
+      - ./:/usr/src/test-project
+      - $HOME/.m2:/root/.m2
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - chrome-service
+      - firefox-service
+    environment:
+      - HUB_HOST=selenium-hub
+      - BROWSER=chrome
+      - TYPE="@UI"
+    entrypoint: ./runner.sh
+
+    

@@ -1,11 +1,10 @@
 version: "3.8"
 
-networks: 
-  grid:
+networks:
   rest:
   
-volumes:
-  reports-api-volume:
+#volumes:
+#  reports-api-volume:
  
 services:
 #Version 9 -
