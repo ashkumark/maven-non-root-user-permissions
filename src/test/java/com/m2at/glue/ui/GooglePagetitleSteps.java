@@ -1,13 +1,14 @@
 package com.m2at.glue.ui;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import com.m2at.constants.Environment;
+import com.m2at.utils.LoadProperties;
+import com.m2at.utils.WebDriverFactory;
+
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,16 +18,12 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.m2at.constants.ConfigPath;
-import com.m2at.utils.LoadProperties;
-import com.m2at.utils.WebDriverFactory;
+import java.io.IOException;
+import java.util.Properties;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 
 public class GooglePagetitleSteps {
 
@@ -60,7 +57,7 @@ public class GooglePagetitleSteps {
 
 	/**
 	 * Wait Until Page Loads completely
-	 *
+	 * 
 	 * @param driver
 	 */
 	public void waitUntilPageLoadsCompletely(WebDriver driver) {
@@ -82,7 +79,7 @@ public class GooglePagetitleSteps {
 
 	/**
 	 * Get element based on locator
-	 *
+	 * 
 	 * @param locator
 	 * @return element
 	 */
@@ -99,7 +96,7 @@ public class GooglePagetitleSteps {
 
 	@Before("@UI")
 	public void beforeScenario() throws InterruptedException, IOException {
-		// Instantiate browser driver
+		// Instantiate browser driver		
 		webDriverFactory = new WebDriverFactory();
 		driver = webDriverFactory.initialiseWebDriver();
 
@@ -117,7 +114,7 @@ public class GooglePagetitleSteps {
 			driver.quit();
 		}
 	}
-
+	
 	public void cookies() {
 		String acceptAllLocator = "//button//*[contains(text(),'Accept all')]";
 		int size = driver.findElements(By.xpath(acceptAllLocator)).size();
@@ -126,8 +123,8 @@ public class GooglePagetitleSteps {
 		}
 	}
 
-	@Given("I am on Google homepage")
-	public void i_am_on_google_homepage() {
+	@Given("I am on the homepage")
+	public void iAmOnTheHomepage() {
 		try {
 			cookies();
 			boolean searchTextBoxPresent = getWebElement("//*[@name='q']").isDisplayed();
@@ -142,15 +139,15 @@ public class GooglePagetitleSteps {
 		}
 	}
 
-	@When("I search for a {string}")
-	public void i_search_for(String searchItem) {
+	@When("I search for {string}")
+	public void iSearchFor(String searchItem) {
 		getWebElement("//*[@name='q']").sendKeys(searchItem);
 		getWebElement("//*[@name='q']").submit();
 		waitUntilPageLoadsCompletely(driver);
 	}
 
-	@Then("the page title should include the {string}")
-	public void the_page_title_should_include(String expected) {
+	@Then("the page title should include {string}")
+	public void thePageTitleShouldInclude(String expected) {
 		try {
 			System.out.println("expected: " + expected);
 

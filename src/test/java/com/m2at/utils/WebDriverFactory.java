@@ -1,27 +1,25 @@
 package com.m2at.utils;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.logging.Level;
-
 import com.m2at.constants.Environment;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.logging.Level;
 
 public class WebDriverFactory {
 
 	WebDriver driver;
 	ChromeOptions options;
 	FirefoxOptions foptions;
-
+	
 	String hostName;
 	String browserType;
 
@@ -60,23 +58,23 @@ public class WebDriverFactory {
 
 		return options;
 	}
-
+	
 	public void setFirefoxLogOff() {
 		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "firefoxLog");
 		java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
 
 	}
-
+	
 	public FirefoxOptions getFirefoxOptions() {
 		setFirefoxLogOff();
-
+		
 		foptions = new FirefoxOptions();
 		return foptions;
 	}
 
 	public FirefoxOptions getFirefoxHeadlessOptions() {
 		setFirefoxLogOff();
-
+		
 		foptions = new FirefoxOptions();
 		foptions.setHeadless(true);
 
@@ -90,7 +88,7 @@ public class WebDriverFactory {
 	public ChromeDriver getChromeHeadlessDriver() {
 		return new ChromeDriver(getChromeHeadlessOptions());
 	}
-
+	
 	public FirefoxDriver getFirefoxDriver() {
 		return new FirefoxDriver(getFirefoxOptions());
 	}
@@ -106,7 +104,7 @@ public class WebDriverFactory {
 	public RemoteWebDriver getChromeRemoteHeadlessDriver() throws MalformedURLException {
 		return new RemoteWebDriver(new URL("http://" + hostName + ":4444/wd/hub"), getChromeHeadlessOptions());
 	}
-
+	
 	public RemoteWebDriver getFirefoxRemoteDriver() throws MalformedURLException {
 		return new RemoteWebDriver(new URL("http://" + hostName + ":4444/wd/hub"), getFirefoxOptions());
 	}
@@ -122,49 +120,49 @@ public class WebDriverFactory {
 		if (hostName == null) { // LOCAL
 			System.out.println("host name parameter not set, defaulting to 'local'");
 
-			if (browserType != null) {
+			if (browserType == null) {
 				System.out.println("browserType parameter not set, defaulting to - " + Environment.BROWSER.getValue());
 
 				switch (Environment.BROWSER.getValue()) {
-					case "chrome":
-						//WebDriverManager.chromedriver().setup();
-						//driver = getChromeDriver();
-						driver = WebDriverManager.chromedriver().create();
-						break;
-					case "firefox":
-						WebDriverManager.firefoxdriver().setup();
-						driver = getFirefoxDriver();
-						break;
-					default:
-						break;
+				case "chrome":
+					//WebDriverManager.chromedriver().setup();
+					//driver = getChromeDriver();
+					driver = WebDriverManager.chromedriver().create();
+					break;
+				case "firefox":
+					WebDriverManager.firefoxdriver().setup();
+					driver = getFirefoxDriver();
+					break;
+				default:
+					break;
 				}
-
+				
 			}
 		}
 
 		if (hostName != null && !hostName.isEmpty()  ) { // REMOTE
-
+			
 			if (browserType == null) {
 				System.out.println("browserType parameter not set, defaulting to 'chrome'");
 				driver = getChromeRemoteDriver();
 			}
-
+			
 			switch (browserType) {
-				case "chrome":
-					driver = getChromeRemoteDriver();
-					break;
-				case "chromeheadless":
-					driver = getChromeRemoteHeadlessDriver();
-					break;
-				case "firefox":
-					driver = getFirefoxRemoteDriver();
-					break;
-				case "firefoxheadless":
-					driver = getFirefoxRemoteHeadlessDriver();
-					break;
-				default:
-					System.out.println("Driver not initialised");
-					throw new RuntimeException("Unsupported browser");
+			case "chrome":
+				driver = getChromeRemoteDriver();
+				break;
+			case "chromeheadless":
+				driver = getChromeRemoteHeadlessDriver();
+				break;
+			case "firefox":
+				driver = getFirefoxRemoteDriver();
+				break;
+			case "firefoxheadless":
+				driver = getFirefoxRemoteHeadlessDriver();
+				break;
+			default:
+				System.out.println("Driver not initialised");
+				throw new RuntimeException("Unsupported browser");
 			}
 		}
 
@@ -173,9 +171,9 @@ public class WebDriverFactory {
 
 	/*
 	 * public WebDriver initialiseWebDriver() throws MalformedURLException {
-	 *
+	 * 
 	 * setDriver(browserType);
-	 *
+	 * 
 	 * return driver; }
 	 */
 }
