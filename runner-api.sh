@@ -2,7 +2,6 @@
 
 echo "* RUN .. check container"
 echo "Container  *-api-test-service-run-* created and alive...."
-docker ps
 
 echo "Run automated API tests (using runner script)..."
 
@@ -36,7 +35,7 @@ ls -lrt
 #echo "Installing docker"
 #apt-get update
 #apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin --no-install-recommends
-docker version
+#docker version
 
 #echo "Copy target from docker container to workspace"
 #sleep 180s
