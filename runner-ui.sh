@@ -26,7 +26,7 @@ do
 done
 
 # Run tests
-mvn -f pom.xml test -Dtest=TestRunner -Dcucumber.filter.tags=$TYPE -DHUB_HOST=$HUB_HOST -DBROWSER=$BROWSER
+mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=$TYPE -DHUB_HOST=$HUB_HOST -DBROWSER=$BROWSER
 
 
 docker ps
