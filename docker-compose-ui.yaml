@@ -8,7 +8,7 @@ networks:
  
 services:
   selenium-hub-service:    
-    image: selenium/hub:3.141.59
+    image: selenium/hub:4.0.0
     container_name: selenium-hub
     networks:
       - grid
@@ -16,7 +16,7 @@ services:
       - "4444:4444"
    
   chrome-service:  
-    image: selenium/node-chrome:3.141.59
+    image: selenium/node-chrome:4.0.0
     networks:
       - grid
     volumes:
@@ -31,7 +31,7 @@ services:
      - "5901"
 
   firefox-service: 
-    image: selenium/node-firefox:3.141.59
+    image: selenium/node-firefox:4.0.0
     networks:
       - grid
     volumes:
