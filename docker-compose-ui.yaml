@@ -65,7 +65,8 @@ services:
       - firefox-service
     environment:
       - HUB_HOST=selenium-hub
-      - BROWSER=chrome
+      - BROWSER=$BROWSER
+#      - BROWSER=chrome
       - TYPE="@UI"
     entrypoint: ./runner-ui.sh
 
