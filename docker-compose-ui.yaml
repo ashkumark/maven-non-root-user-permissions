@@ -21,6 +21,7 @@ services:
       - grid
     volumes:
       - /dev/shm:/dev/shm
+    shm_size: "2g"
     depends_on:
       - selenium-hub-service
     environment:
@@ -36,6 +37,7 @@ services:
       - grid
     volumes:
       - /dev/shm:/dev/shm
+    shm_size: "2g"
     depends_on:
       - selenium-hub-service
     environment:
