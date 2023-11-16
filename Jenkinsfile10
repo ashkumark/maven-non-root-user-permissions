@@ -84,7 +84,7 @@ pipeline {
                         sh './run-api-tests.sh'
                       }
                         catch(err) {
-                            junit skipPublishingChecks: true, testResults: 'test-results.xml'
+                            junit skipPublishingChecks: false, testResults: 'test-results.xml'
                             error('Tests failed.. build should fail..')
                             throw err
                     }
