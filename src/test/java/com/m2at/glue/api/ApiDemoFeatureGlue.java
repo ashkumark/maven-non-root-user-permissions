@@ -100,6 +100,7 @@ public class ApiDemoFeatureGlue {
 		} catch (AssertionError e) {
 			System.out.println("*** Test Failed" );
 			Assert.fail();
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 
