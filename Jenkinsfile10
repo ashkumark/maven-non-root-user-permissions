@@ -76,18 +76,21 @@ pipeline {
                         echo "Change script permissions"
                         chmod ug+x ./run-api-tests.sh
                         chmod ug+x ./runner-api.sh
-                        
-                        try {
-                           echo "run-api-tests.sh.."                        
-                           ./run-api-tests.sh
-                        catch(err) {
-                          step([$class: 'JUnitResultArchiver', testResults: '${currentWorkspace}/target/surefire-reports/TEST-*.xml'])
-                          if (currentBuild.result == 'UNSTABLE')
-                            currentBuild.result = 'FAILURE\'
-                          throw err
-                        }
-                        docker ps 
                 '''
+
+                srcipt {
+                    try{
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                      }
+                        catch(err) {
+                            junit skipPublishingChecks: true, testResults: 'test-results.xml'
+                            error('Tests failed.. build should fail..')
+                            throw err
+                    }
+                }
+                //docker ps
+
 
                 sh '''#!/bin/bash
                         echo "Change script permissions"
@@ -98,7 +101,11 @@ pipeline {
                         ./run-ui-tests.sh
                         docker ps 
                 '''
+                }
             }
+
+
+
         }
 
         stage('Generate HTML report') {
@@ -143,7 +150,7 @@ pipeline {
             cleanWs()
         }
     }
-}
+
 
 
 
