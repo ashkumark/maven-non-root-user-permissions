@@ -87,7 +87,7 @@ public class ApiDemoFeatureGlue {
 		System.out.println("Response: " + response.getBody().prettyPrint());
 	}
 
-	@Then("the status code should be {int}")
+/*	@Then("the status code should be {int}")
 	public void the_status_code_should_be(Integer statusCode) {
 		System.out.println("*** Then the status code should be 200.." );
 		try {
@@ -100,8 +100,16 @@ public class ApiDemoFeatureGlue {
 		} catch (AssertionError e) {
 			System.out.println("*** Test Failed" );
 			Assert.fail();
-			throw new RuntimeException(e.getMessage());
 		}
+	}*/
+
+	@Then("the status code should be {int}")
+	public void the_status_code_should_be(Integer statusCode) {
+		System.out.println("*** Then the status code should be 200.." );
+			response.
+					then().
+					spec(getResponseSpecification()).
+					assertThat().statusCode(is(equalTo(statusCode)));
 	}
 
 	
