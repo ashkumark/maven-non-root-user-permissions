@@ -84,7 +84,7 @@ pipeline {
                         sh './run-api-tests.sh'
                       }
                         catch(err) {
-                            junit skipPublishingChecks: false, testResults: 'test-results.xml'
+                            junit skipPublishingChecks: false, testResults: '${currentWorkspace}/target/surefire-reports/TEST-*.xml'
                             error('Tests failed.. build should fail..')
                             throw err
                     }
