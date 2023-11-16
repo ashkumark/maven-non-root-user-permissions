@@ -17,7 +17,7 @@ services:
       - rest
     environment:
       - TYPE="@API"
-      - JAVA_OPTS=-Xmx8192m -XX:MaxPermSize=1024m -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"
+      - JAVA_OPTS="-Xmx8192m -XX:MaxPermSize=1024m -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"
     volumes:
       - ./:/usr/src/test-project
       - $HOME/.m2:/root/.m2
