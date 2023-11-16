@@ -13,39 +13,43 @@ services:
     networks:
       - grid
     ports:
-      - "4444:4444"
+      - "4442-4444:4442-4444"
    
   chrome-service:  
     image: selenium/node-chrome:4.9.0
     networks:
       - grid
-    volumes:
-      - /dev/shm:/dev/shm
+#    volumes:
+#      - /dev/shm:/dev/shm
     shm_size: "2g"
     depends_on:
       - selenium-hub-service
     environment:
-      - HUB_HOST=selenium-hub
-    ports:
-     - 5901
-    expose:
-     - "5901"
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+#    ports:
+#     - 5901
+#    expose:
+#     - "5901"
 
   firefox-service: 
     image: selenium/node-firefox:4.9.0
     networks:
       - grid
-    volumes:
-      - /dev/shm:/dev/shm
+#    volumes:
+#      - /dev/shm:/dev/shm
     shm_size: "2g"
     depends_on:
       - selenium-hub-service
     environment:
-      - HUB_HOST=selenium-hub
-    ports:
-     - 5901
-    expose:
-     - "5901"
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+#    ports:
+#     - 5901
+#    expose:
+#     - "5901"
 
   ui-test-service:
     image: docker-jenkins-automation:latest
