@@ -76,9 +76,16 @@ pipeline {
                         echo "Change script permissions"
                         chmod ug+x ./run-api-tests.sh
                         chmod ug+x ./runner-api.sh
-
-                        echo "run-api-tests.sh.."                        
-                        ./run-api-tests.sh
+                        
+                        try {
+                           echo "run-api-tests.sh.."                        
+                           ./run-api-tests.sh
+                        catch(err) {
+                          step([$class: 'JUnitResultArchiver', testResults: '${currentWorkspace}/target/surefire-reports/TEST-*.xml'])
+                          if (currentBuild.result == 'UNSTABLE')
+                            currentBuild.result = 'FAILURE\'
+                          throw err
+                        }
                         docker ps 
                 '''
 
