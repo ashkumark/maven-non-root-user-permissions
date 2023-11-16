@@ -1,5 +1,6 @@
 package com.m2at.utils;
 
+import com.m2at.constants.Browser;
 import com.m2at.constants.Environment;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.logging.Level;
+
+import static com.m2at.constants.Browser.CHROME;
 
 public class WebDriverFactory {
 
@@ -147,22 +150,22 @@ public class WebDriverFactory {
 				driver = getChromeRemoteDriver();
 			}
 			
-			switch (browserType) {
-			case "chrome":
+			switch (Browser.valueOf(browserType.toUpperCase())) {
+			case CHROME:
 				driver = getChromeRemoteDriver();
 				break;
-			case "chromeheadless":
+			case FIREFOX:
 				driver = getChromeRemoteHeadlessDriver();
 				break;
-			case "firefox":
+			case CHROME_HEADLESS:
 				driver = getFirefoxRemoteDriver();
 				break;
-			case "firefoxheadless":
+			case FIREFOX_HEADLESS:
 				driver = getFirefoxRemoteHeadlessDriver();
 				break;
 			default:
 				System.out.println("Driver not initialised");
-				throw new RuntimeException("Unsupported browser");
+				throw new RuntimeException("Unsupported browser - " + browserType.toUpperCase());
 			}
 		}
 
