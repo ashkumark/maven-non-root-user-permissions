@@ -19,7 +19,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -70,7 +72,7 @@ public class GooglePagetitleSteps {
 
 		try {
 			Thread.sleep(1000);
-			WebDriverWait wait = new WebDriverWait(driver, 10);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 			wait.until(expectation);
 		} catch (Throwable error) {
 			Assert.fail("Timeout waiting for Page Load Request to complete.");
@@ -101,7 +103,7 @@ public class GooglePagetitleSteps {
 		driver = webDriverFactory.initialiseWebDriver();
 
 		// Instantiate WebDriverWait
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		// Navigate
 		driver.manage().window().maximize();

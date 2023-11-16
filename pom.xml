@@ -9,7 +9,7 @@
 	<properties>
 		<cucumber.version>6.9.1</cucumber.version>
 		<rest-assured.version>5.1.0</rest-assured.version>
-		<selenium.version>3.141.59</selenium.version>
+		<selenium.version>4.9.0</selenium.version>
 		<java-hamcrest.version>2.0.0.0</java-hamcrest.version>
 	</properties>
 
@@ -128,7 +128,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M5</version>
+				<version>3.1.0</version>
 				<configuration>
 					<includes>
 						<include>TestRunner.java</include>
