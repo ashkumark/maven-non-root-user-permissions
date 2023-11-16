@@ -49,7 +49,7 @@ pipeline {
             }
         }
 
-        stage('API Automation') {
+        stage('Run Automated Tests') {
             agent {
                 docker {
                     image 'docker-jenkins-automation:latest'
