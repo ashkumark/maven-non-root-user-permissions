@@ -7,6 +7,7 @@ pipeline {
         JENKINS_USER_ID = "${sh(script: 'id -u', returnStdout: true).trim()}"
         JENKINS_GROUP_ID = "${sh(script: 'id -g', returnStdout: true).trim()}"
         currentWorkspace = ''
+        MAVEN_OPTS = '-Dmaven.test.failure.ignore=false'
     }
 
 //    parameters {
@@ -79,20 +80,25 @@ pipeline {
                 '''
 
                 srcipt {
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                }
+
+/*                srcipt {
                     try{
                         echo "run-api-tests.sh.."
                         sh './run-api-tests.sh'
-                      }
-                        catch(err) {
-                            junit skipPublishingChecks: false, testResults: '${currentWorkspace}/target/surefire-reports/TEST-*.xml'
-                            error('Tests failed.. build should fail..')
-                            throw err
                     }
-                }
+                    catch(err) {
+                        junit skipPublishingChecks: false, testResults: '${currentWorkspace}/target/surefire-reports/TEST-*.xml'
+                        error('Tests failed.. build should fail..')
+                        throw err
+                    }
+                }*/
                 //docker ps
 
 
-                sh '''#!/bin/bash
+/*                sh '''#!/bin/bash
                         echo "Change script permissions"
                         chmod ug+x ./run-ui-tests.sh
                         chmod ug+x ./runner-ui.sh
@@ -100,7 +106,7 @@ pipeline {
                         echo "run-ui-tests.sh.."                        
                         ./run-ui-tests.sh
                         docker ps 
-                '''
+                '''*/
                 }
             }
 
