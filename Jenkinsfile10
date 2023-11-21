@@ -79,10 +79,10 @@ pipeline {
                         chmod ug+x ./runner-api.sh
                 '''
 
-                srcipt {
+                sh '''
                     echo "run-api-tests.sh.."
                     sh './run-api-tests.sh'
-                }
+                '''
 
 /*                srcipt {
                     try{
