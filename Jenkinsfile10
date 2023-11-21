@@ -7,7 +7,7 @@ pipeline {
         JENKINS_USER_ID = "${sh(script: 'id -u', returnStdout: true).trim()}"
         JENKINS_GROUP_ID = "${sh(script: 'id -g', returnStdout: true).trim()}"
         currentWorkspace = ''
-        MAVEN_OPTS = '-Dmaven.test.failure.ignore=false'
+        //MAVEN_OPTS = '-Dmaven.test.failure.ignore=false'
     }
 
 //    parameters {
