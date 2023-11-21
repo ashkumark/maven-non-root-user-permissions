@@ -79,10 +79,19 @@ pipeline {
                         chmod ug+x ./runner-api.sh
                 '''
 
-                sh '''
+                script{
+                    try {
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                    } finally {
+                        findText regexp: 'There are test failures', alsoCheckConsoleOutput: true, unstableIfFound: true junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
+                    }
+                }
+
+                /*sh '''
                     echo "run-api-tests.sh.."
                     sh './run-api-tests.sh'
-                '''
+                '''*/
 
 /*                srcipt {
                     try{
