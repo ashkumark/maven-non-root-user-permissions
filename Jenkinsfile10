@@ -87,7 +87,7 @@ pipeline {
                         sh './run-api-tests.sh'
                     } finally {
                         def response = '${env.BUILD_URL}/consoleText'
-                        if (response.content.contains('There are test failures')){
+                        if (response.contains('There are test failures')){
                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
                                 sh "exit 1"
                             }
