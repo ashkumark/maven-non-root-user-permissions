@@ -88,7 +88,7 @@ pipeline {
                     } finally {
                         //def response = "$BUILD_URL/consoleText"
 
-                        sh 'curl $BUILD_URL/consoleText -o "./log.txt"'
+                        sh 'curl -v $BUILD_URL/consoleText -o "./log.txt"'
                         echo "log.txt..."
                         sh 'ls -lrt'
 
