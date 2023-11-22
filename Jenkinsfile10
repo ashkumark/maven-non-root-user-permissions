@@ -86,11 +86,15 @@ pipeline {
                         echo "run-api-tests.sh.."
                         sh './run-api-tests.sh'
                     } finally {
-                        def response = "$BUILD_URL/consoleText"
+                        //def response = "$BUILD_URL/consoleText"
 
-                        echo "response: $response"
+                        sh 'curl $BUILD_URL/consoleText -o "./log.txt"'
+                        echo "log.txt..."
+                        sh 'ls -lrt'
 
-                        if (response.contains("There are test failures")){
+                        def content = "${sh(script: 'cat ./log.txt', returnStdout: true).trim()}"
+
+                        if (content.contains("There are test failures")){
                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
                                 sh "exit 1"
                             }
