@@ -88,7 +88,7 @@ pipeline {
                     } finally {
                         //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
 
-                        List<String> log = bRun.getRawBuild().getLog(100)
+                        List<String> log = currentBuild.getRawBuild().getLog(100)
 
                         for (String line : log) {
                             if (line.contains('There are test failures')) {
