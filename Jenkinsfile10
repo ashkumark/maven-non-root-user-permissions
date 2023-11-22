@@ -92,7 +92,7 @@ pipeline {
 //                        echo "log.txt..."
 //                        sh 'ls -lrt'
 
-//                        def content = "${sh(script: 'cat ./log.txt', returnStdout: true).trim()}"
+                      //"${sh(script: 'cat ./log.txt', returnStdout: true).trim()}"
 
                         if (findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])){
                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
