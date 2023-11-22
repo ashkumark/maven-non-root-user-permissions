@@ -86,6 +86,24 @@ pipeline {
                         echo "run-api-tests.sh.."
                         sh './run-api-tests.sh'
                     } finally {
+                        if ( manager.logContains('There are test failures') ) {
+                            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                                error('There are test failures.')
+                            }
+                        } else {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS', message: 'Tests Passed') {
+                                sh "exit 0"
+                            }
+                        }
+                    }
+                }
+
+
+/*                script{
+                    try {
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                    } finally {
                         //def response = "$BUILD_URL/consoleText"
 
 //                        sh 'curl -v $BUILD_URL/consoleText -o "./log.txt"'
@@ -104,7 +122,7 @@ pipeline {
                             }
                         }
                     }
-                }
+                }*/
 
 
 
