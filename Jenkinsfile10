@@ -86,10 +86,19 @@ pipeline {
                         echo "run-api-tests.sh.."
                         sh './run-api-tests.sh'
                     } finally {
-                        findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
-                        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
-                            sh "exit 1"
+                        def response = httpRequest '${env.BUILD_URL}/consoleText'
+                        if (response.content.contains('There are test failures')){
+                            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
+                                sh "exit 1"
+                            }
+                            env.BUILD_FAILURE_MESSAGE = "Build Failed"
+                        } else {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS', message: 'Tests Passed') {
+                                sh "exit 0"
+                            }
                         }
+                        //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
+
                     }
                 }
 
