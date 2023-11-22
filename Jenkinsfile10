@@ -79,6 +79,7 @@ pipeline {
                         chmod ug+x ./runner-api.sh
                 '''
 
+
                 script{
                     try {
                         echo "run-api-tests.sh.."
@@ -87,8 +88,23 @@ pipeline {
                         //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, regexp: 'There are test failures')])
                         findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
                         //findText regexp: 'There are test failures', alsoCheckConsoleOutput: true, unstableIfFound: true allowEmptyResults: true testResults: 'target/surefire-reports/*.xml'
+
+                        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                            sh "exit 1"
+                        }
                     }
                 }
+
+/*                script{
+                    try {
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                    } finally {
+                        //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, regexp: 'There are test failures')])
+                        findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
+                        //findText regexp: 'There are test failures', alsoCheckConsoleOutput: true, unstableIfFound: true allowEmptyResults: true testResults: 'target/surefire-reports/*.xml'
+                    }
+                }*/
 
                 /*sh '''
                     echo "run-api-tests.sh.."
