@@ -88,24 +88,21 @@ pipeline {
                     } finally {
                         //def response = "$BUILD_URL/consoleText"
 
-                        sh 'curl -v $BUILD_URL/consoleText -o "./log.txt"'
-                        echo "log.txt..."
-                        sh 'ls -lrt'
+//                        sh 'curl -v $BUILD_URL/consoleText -o "./log.txt"'
+//                        echo "log.txt..."
+//                        sh 'ls -lrt'
 
-                        def content = "${sh(script: 'cat ./log.txt', returnStdout: true).trim()}"
+//                        def content = "${sh(script: 'cat ./log.txt', returnStdout: true).trim()}"
 
-                        if (content.contains("There are test failures")){
+                        if (findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])){
                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
                                 sh "exit 1"
                             }
-                            env.BUILD_FAILURE_MESSAGE = "Build Failed"
                         } else {
                             catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS', message: 'Tests Passed') {
                                 sh "exit 0"
                             }
                         }
-                        //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
-
                     }
                 }
 
