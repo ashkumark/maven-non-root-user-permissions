@@ -84,13 +84,13 @@ pipeline {
                     try {
                         echo "run-api-tests.sh.."
                         sh './run-api-tests.sh'
-                    } catch (err) {
+                    } catch (AssertionError assertionError) {
                         //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, regexp: 'There are test failures')])
                         //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
                         //findText regexp: 'There are test failures', alsoCheckConsoleOutput: true, unstableIfFound: true allowEmptyResults: true testResults: 'target/surefire-reports/*.xml'
-                        echo "Failed: ${err}"
+                        echo "Failed: ${assertionError.getMessage()}"
 
-                        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
                             sh "exit 1"
                         }
                     }
