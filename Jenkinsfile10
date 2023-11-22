@@ -86,7 +86,7 @@ pipeline {
                         echo "run-api-tests.sh.."
                         sh './run-api-tests.sh'
                     } finally {
-                        def response = '${env.BUILD_URL}/consoleText'
+                        def response = "$BUILD_URL/consoleText"
 
                         echo "response: $response"
 
