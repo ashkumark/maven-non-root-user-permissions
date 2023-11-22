@@ -86,19 +86,13 @@ pipeline {
                         echo "run-api-tests.sh.."
                         sh './run-api-tests.sh'
                     } finally {
-                        //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
-
-                        List<String> log = currentBuild.getRawBuild().getLog(100)
-
-                        for (String line : log) {
-                            if (line.contains('There are test failures')) {
-                                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
-                                        sh "exit 1"
-                                    }
-                            }
+                        findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
+                        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
+                            sh "exit 1"
                         }
                     }
                 }
+
 
 
 /*                script{
