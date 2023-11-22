@@ -7,6 +7,7 @@ pipeline {
         JENKINS_USER_ID = "${sh(script: 'id -u', returnStdout: true).trim()}"
         JENKINS_GROUP_ID = "${sh(script: 'id -g', returnStdout: true).trim()}"
         currentWorkspace = ''
+        logContent = ''
         //MAVEN_OPTS = '-Dmaven.test.failure.ignore=false'
     }
 
@@ -87,13 +88,18 @@ pipeline {
                     } finally {
                         //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
 
-                        if (manager.logContains('There are test failures')) {
-                            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
-                                sh "exit 1"
+                        List<String> log = bRun.getRawBuild().getLog(100)
+
+                        for (String line : log) {
+                            if (line.contains('There are test failures')) {
+                                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
+                                        sh "exit 1"
+                                    }
                             }
                         }
                     }
                 }
+
 
 /*                script{
                     try {
