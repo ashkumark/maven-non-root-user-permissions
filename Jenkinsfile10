@@ -86,8 +86,9 @@ pipeline {
                         echo "run-api-tests.sh.."
                         sh './run-api-tests.sh'
                     } finally {
-                        if ( manager.logContains('There are test failures') ) {
+                        if ( manager.logContains('There are test failures*') ) {
                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                                sh "exit 1"
                                 error('There are test failures.')
                             }
                         } else {
