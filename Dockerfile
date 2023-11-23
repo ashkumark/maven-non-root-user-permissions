@@ -28,6 +28,10 @@ RUN usermod -aG sudo ${user}
 RUN chown -R $user:$group $JENKINS_HOME $WORKING_DIR
 RUN chmod -R ug+rwx $JENKINS_HOME $WORKING_DIR
 
+RUN mkdir -p /usr/share/maven/.m2
+RUN groupadd $group -g $gid \
+    && useradd -m $user -u $uid -g $gid -d /usr/share/maven/.m2
+
 #Docker - https://docs.docker.com/engine/api/
 ENV DOCKER_CHANNEL stable
 ENV DOCKER_VERSION 23.0.6
