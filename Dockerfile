@@ -28,9 +28,9 @@ RUN usermod -aG sudo ${user}
 RUN chown -R $user:$group $JENKINS_HOME $WORKING_DIR
 RUN chmod -R ug+rwx $JENKINS_HOME $WORKING_DIR
 
-RUN mkdir -p /usr/share/maven/.m2
-RUN chown -R $user:$group /usr/share/maven/.m2
-RUN chmod -R ug+rwx /usr/share/maven/.m2
+RUN mkdir -p /usr/share/maven/.m2/repository
+RUN chown -R $user:$group /usr/share/maven/.m2/repository
+RUN chmod -R ug+rwx /usr/share/maven/.m2/repository
 
 #Docker - https://docs.docker.com/engine/api/
 ENV DOCKER_CHANNEL stable
