@@ -21,7 +21,7 @@ services:
 
     volumes:
       - ./:/usr/src/test-project
-      - $HOME/.m2:/root/.m2
+#      - $HOME/.m2:/root/.m2
       - /var/run/docker.sock:/var/run/docker.sock
     command: /bin/sh -c ./runner-api.sh
 
