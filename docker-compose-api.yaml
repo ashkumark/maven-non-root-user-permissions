@@ -17,12 +17,12 @@ services:
       - rest
     environment:
       - TYPE="@API"
-      - MAVEN_CONFIG=/usr/share/maven/.m2
-      - Duser.home=/usr/share/maven
+#      - MAVEN_CONFIG=/usr/share/maven/.m2
+#      - Duser.home=/usr/share/maven
     volumes:
       - ./:/usr/src/test-project
-#      - $HOME/.m2:/root/.m2
-      - ~/.m2:/usr/share/maven/.m2
+      - $HOME/.m2:/root/.m2
+#      - ~/.m2:/usr/share/maven/.m2
       - /var/run/docker.sock:/var/run/docker.sock
     command: /bin/sh -c ./runner-api.sh
 

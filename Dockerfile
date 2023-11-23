@@ -28,6 +28,10 @@ RUN usermod -aG sudo ${user}
 RUN chown -R $user:$group $JENKINS_HOME $WORKING_DIR
 RUN chmod -R ug+rwx $JENKINS_HOME $WORKING_DIR
 
+RUN mkdir -p /root/.m2
+RUN chown -R $user:$group /root
+RUN chmod -R ug+rwx /root
+
 RUN mkdir -p /usr/share/maven/.m2/repository
 RUN chown -R $user:$group /usr/share/maven/.m2/repository
 RUN chmod -R ug+rwx /usr/share/maven/.m2/repository
