@@ -1,0 +1,250 @@
+pipeline {
+    agent any
+    //agent { label 'jenkins-agent-node' }
+
+    environment {
+        REPO = 'ash/k8s-jenkins-automation'
+        VERSION = "${env.BUILD_ID}"
+        JENKINS_USER_ID = "${sh(script: 'id -u', returnStdout: true).trim()}"
+        JENKINS_GROUP_ID = "${sh(script: 'id -g', returnStdout: true).trim()}"
+        currentWorkspace = ''
+        //DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
+
+    }
+
+    options {
+        skipDefaultCheckout()
+        timeout(time: 10, unit: 'MINUTES')
+    }
+
+    stages {
+        stage("Check Docker version") {
+            steps {
+                echo 'JENKINS_USER_ID'
+                echo JENKINS_USER_ID
+                echo 'JENKINS_GROUP_ID'
+                echo JENKINS_GROUP_ID
+                sh '''
+                  docker version
+                  docker info
+                '''
+            }
+        }
+
+        stage('Docker System Prune') {
+            steps {
+                sh 'docker system prune -a --volumes -f'
+            }
+        }
+
+        stage('Checkout from SCM') {
+            steps {
+                git branch: 'master', credentialsId: 'GitHub', url: 'https://github.com/ashkumark/maven-non-root-user-permissions.git'
+            }
+        }
+
+        stage('Build Image') {
+
+            steps{
+                script {
+                    sh 'docker build -f Dockerfile -t ${REPO}:${VERSION} .'
+                    echo 'Build Image Completed'
+                    sh 'docker image ls'
+                    currentWorkspace = "$WORKSPACE"
+                    echo "Current workspace is ${currentWorkspace}"
+                    sh 'ls -lrt'
+
+                    //sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    //echo 'Login Completed'
+
+                    //sh 'sudo docker push dockerhubusername/docker-jenkins-automation:$BUILD_NUMBER'
+                    //echo 'Push Image Completed'
+
+                    //sh 'docker logout' //include in post
+                }
+            }
+
+/*            steps {
+                script {
+                    dockerImage = docker.build("docker-jenkins-automation:latest")
+                    echo "image built"
+                    sh 'docker image ls'
+                    currentWorkspace = "$WORKSPACE"
+                    echo "Current workspace is ${currentWorkspace}"
+                }
+            }*/
+        }
+
+        stage('Run Automated Tests') {
+            agent {
+                docker {
+                    image "${REPO}:${VERSION}"
+                    //image 'ash/k8s-jenkins-automation:8'
+                    args '-v $HOME/.m2:/root/.m2'
+                    //args '-v $HOME/.m2:/usr/share/maven/.m2'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    reuseNode true
+                }
+            }
+            steps {
+                // Create Network
+                sh "docker network create jenkins-${BUILD_NUMBER}"
+                sh '''#!/bin/bash
+                      echo "Check permissions 1"
+                      echo "* Reuse node using new image "
+                      echo "Within container using workspace as working directory.."
+                      whoami
+                      pwd
+                      ls -lrt
+                      docker ps 
+                      docker-compose config
+                      echo "printenv"
+                      printenv
+                '''
+
+                sh '''#!/bin/bash
+                        echo "Change script permissions"
+                        chmod ug+x ./run-api-tests.sh
+                        chmod ug+x ./runner-api.sh
+                '''
+
+
+                script{
+                    try {
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                    } finally {
+                        if (manager.logContains(".*There are test failures.*")) {
+                            manager.addBadge("error.gif", "Test failures")
+                            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                                sh "exit 1"
+                                error('There are test failures.')
+                            }
+                        } else {
+                            manager.addBadge("success.gif", "Tests Passed")
+                            catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS', message: 'Tests Passed') {
+                                sh "exit 0"
+                            }
+                        }
+                    }
+                }
+
+
+/*                script{
+                    try {
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                    } finally {
+                        //def response = "$BUILD_URL/consoleText"
+
+//                        sh 'curl -v $BUILD_URL/consoleText -o "./log.txt"'
+//                        echo "log.txt..."
+//                        sh 'ls -lrt'
+
+                      //"${sh(script: 'cat ./log.txt', returnStdout: true).trim()}"
+
+                        if (findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])){
+                            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE', message: 'There are test failures') {
+                                sh "exit 1"
+                            }
+                        } else {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS', message: 'Tests Passed') {
+                                sh "exit 0"
+                            }
+                        }
+                    }
+                }*/
+
+
+
+/*                script{
+                    try {
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                    } finally {
+                        //findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, regexp: 'There are test failures')])
+                        findText(textFinders: [textFinder(alsoCheckConsoleOutput: true, buildResult: 'FAILURE', regexp: 'There are test failures')])
+                        //findText regexp: 'There are test failures', alsoCheckConsoleOutput: true, unstableIfFound: true allowEmptyResults: true testResults: 'target/surefire-reports/*.xml'
+
+                        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                            sh "exit 1"
+                        }
+                    }
+                }*/
+
+                /*sh '''
+                    echo "run-api-tests.sh.."
+                    sh './run-api-tests.sh'
+                '''*/
+
+/*                srcipt {
+                    try{
+                        echo "run-api-tests.sh.."
+                        sh './run-api-tests.sh'
+                    }
+                    catch(err) {
+                        junit skipPublishingChecks: false, testResults: '${currentWorkspace}/target/surefire-reports/TEST-*.xml'
+                        error('Tests failed.. build should fail..')
+                        throw err
+                    }
+                }*/
+                //docker ps
+
+
+/*                sh '''#!/bin/bash
+                        echo "Change script permissions"
+                        chmod ug+x ./run-ui-tests.sh
+                        chmod ug+x ./runner-ui.sh
+
+                        echo "run-ui-tests.sh.."
+                        ./run-ui-tests.sh
+                        docker ps
+                '''*/
+            }
+        }
+
+
+        stage('Generate HTML report') {
+            steps {
+                cucumber buildStatus: '',
+                        reportTitle: 'Cucumber report',
+                        fileIncludePattern: '**/*.json',
+                        jsonReportDirectory: "${currentWorkspace}/target",
+                        trendsLimit: 10,
+                        classifications: [
+                                [
+                                        'key'  : 'API',
+                                        'value': 'API'
+                                ]
+                        ]
+            }
+        }
+    }
+
+    post {
+        always {
+            // publish html reports
+            publishHTML target: [
+                    allowMissing         : false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll              : true,
+                    reportDir            : "${currentWorkspace}/target/Reports/",
+                    reportFiles          : 'automated-test-report.html',
+                    reportName           : 'Extent Test Report'
+            ]
+            publishHTML target: [
+                    allowMissing         : false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll              : true,
+                    reportDir            : "${currentWorkspace}/target/cucumber-html-report/",
+                    reportFiles          : 'regression-tests.html',
+                    reportName           : 'Cucumber Test Report'
+            ]
+
+            archiveArtifacts artifacts: 'target/Reports/automated-test-report.html', fingerprint: true
+
+            //cleanWs()
+        }
+    }
+
+}
