@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 export HOST_UID_GID=$JENKINS_USER_ID:$JENKINS_GROUP_ID
 echo "User/Group ID - ${HOST_UID_GID}"
