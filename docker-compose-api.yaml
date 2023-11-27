@@ -10,7 +10,7 @@ services:
 #Version 9 -
   api-test-service:
     privileged: true
-    image: "${REPO}:${VERSION}"
+    image: ${REPO}:${VERSION}
     container_name: api-test-container
     working_dir: /usr/src/test-project
     networks:
