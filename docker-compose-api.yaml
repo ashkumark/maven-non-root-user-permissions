@@ -24,7 +24,7 @@ services:
       - $HOME/.m2:/root/.m2
 #      - ~/.m2:/usr/share/maven/.m2
       - /var/run/docker.sock:/var/run/docker.sock
-    command: /bin/sh -c "./runner-api.sh"
+    command: /bin/bash -c './runner-api.sh'
 
 #  # Version 8 -
 #  api-test-service:

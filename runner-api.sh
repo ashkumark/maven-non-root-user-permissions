@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "* RUN .. check container"
 echo "Container  *-api-test-service-run-* created and alive...."
