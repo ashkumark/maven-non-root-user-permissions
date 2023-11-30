@@ -1,37 +1,37 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: jenkins-agent
+  name: jenkins-agent-pod
   namespace: devops-tools
 spec:
-  securityContext:
-	fsGroup: 1001
-	runAsUser: 1001
-	runAsGroup: 1001
   initContainers:
-        - name: volume-mount-non-root-user-permission
-          image: alpine:3.6
-		  command: ["chown", "-R", "1001:1001", "/root/.m2"]
-          command: ["chown", "-R", "1001:1001", "/var/run/docker.sock"]
-          volumeMounts:
-		    - name: m2-home
-              mountPath: /root/.m2
-            - name: docker-socket
-              mountPath: /var/run/docker.sock
+    - name: volume-mount-non-root-user-permission
+      image: alpine:3.6
+      command: ["chown", "-R", "1001:1001", "/root/.m2"]
+      command: ["chown", "-R", "1001:1001", "/var/run/docker.sock"]
+      volumeMounts:
+        - name: m2-home
+          mountPath: /root/.m2
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
   containers:
-  - name: jenkins-agent
-    image: "${REPO}:${VERSION}"
-	volumeMounts:
-	  - name: m2-home
-        mountPath: $HOME/.m2
-      - name: docker-socket
-        mountPath: /var/run/docker.sock
+    - name: jenkins-agent
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+      image: "${REPO}:${VERSION}"
+      volumeMounts:
+        - name: m2-home
+          mountPath: $HOME/.m2
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
   volumes:
     - name: m2-home
       hostPath:
         path: $HOME/.m2
         type: DirectoryOrCreate
-	- name: docker-socket
-	  hostPath:
-		path: /var/run/docker.sock
-		type: Socket
+    - name: docker-socket
+      hostPath:
+        path: /var/run/docker.sock
+        type: Socket
