@@ -20,7 +20,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1001
         runAsGroup: 1001
-      image: "${REPO}:${VERSION}"
+      image: "${env.image_name}"
       volumeMounts:
         - name: m2-home
           mountPath: $HOME/.m2
