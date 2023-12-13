@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: api-test-service
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: api-test-service
+  template:
+    metadata:
+      labels:
+        service: api-test-service
+    spec:
+      containers:
+        - args:
+            - /bin/sh
+            - -c
+            - ./runner-api.sh
+          env:
+            - name: TYPE
+              value: '"@API"'
+          image: ${REPO}:${VERSION}
+          name: api-test-container
+          resources: {}
