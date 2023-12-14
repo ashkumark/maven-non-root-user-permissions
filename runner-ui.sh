@@ -27,7 +27,7 @@ done
 
 # Run tests
 #mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=$TYPE -DHUB_HOST=$HUB_HOST -DBROWSER=$BROWSER
-mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=@UI -DHUB_HOST=$HUB_HOST -DBROWSER="chrome"
+mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=@UI -DHUB_HOST=$SE_EVENT_BUS_HOST -DBROWSER="chrome"
 
 
 #docker ps
