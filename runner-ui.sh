@@ -1,16 +1,16 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "* RUN .. check container"
 echo "Container  *-ui-test-service-run-* created and alive...."
 
 echo "Run automated UI tests (using runner script)..."
 
-whoami
+#whoami
 pwd
 ls -lrt
 mvn -version
 
-docker ps
+#docker ps
 
 echo "Browser - $BROWSER"
 echo "Validate $HUB_HOST status.."
@@ -26,10 +26,11 @@ do
 done
 
 # Run tests
-mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=$TYPE -DHUB_HOST=$HUB_HOST -DBROWSER=$BROWSER
+#mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=$TYPE -DHUB_HOST=$HUB_HOST -DBROWSER=$BROWSER
+mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=@UI -DHUB_HOST=$HUB_HOST -DBROWSER="chrome"
 
 
-docker ps
+#docker ps
 
 echo "List files - shows target"
 ls -lrt
