@@ -100,7 +100,8 @@ public class WebDriverFactory {
 		return new FirefoxDriver(getFirefoxHeadlessOptions());
 	}
 
-	public RemoteWebDriver getChromeRemoteDriver() throws MalformedURLException {
+	/*** For NON K8s only ***/
+/*	public RemoteWebDriver getChromeRemoteDriver() throws MalformedURLException {
 		return new RemoteWebDriver(new URL("http://" + hostName + ":4444/wd/hub"), getChromeOptions());
 	}
 
@@ -114,6 +115,23 @@ public class WebDriverFactory {
 
 	public RemoteWebDriver getFirefoxRemoteHeadlessDriver() throws MalformedURLException {
 		return new RemoteWebDriver(new URL("http://" + hostName + ":4444/wd/hub"), getFirefoxHeadlessOptions());
+	}*/
+
+	/*** For K8s only ***/
+	public RemoteWebDriver getChromeRemoteDriver() throws MalformedURLException {
+		return new RemoteWebDriver(new URL(hostName), getChromeOptions());
+	}
+
+	public RemoteWebDriver getChromeRemoteHeadlessDriver() throws MalformedURLException {
+		return new RemoteWebDriver(new URL(hostName), getChromeHeadlessOptions());
+	}
+
+	public RemoteWebDriver getFirefoxRemoteDriver() throws MalformedURLException {
+		return new RemoteWebDriver(new URL(hostName), getFirefoxOptions());
+	}
+
+	public RemoteWebDriver getFirefoxRemoteHeadlessDriver() throws MalformedURLException {
+		return new RemoteWebDriver(new URL(hostName), getFirefoxHeadlessOptions());
 	}
 
 	public WebDriver initialiseWebDriver() throws MalformedURLException {

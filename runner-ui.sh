@@ -21,13 +21,14 @@ echo "Loop until the hub status is true.."
 while [ $STATUS != true ]
 do
  sleep 1
- STATUS=$(curl -s http://selenium-hub:4444/wd/hub/status | jq -r .value.ready)
+ #STATUS=$(curl -s http://selenium-hub:4444/wd/hub/status | jq -r .value.ready)
+ STATUS=$(curl -s http://192.168.60.2:32001/wd/hub/status | jq -r .value.ready)
  echo "Status of Selenium Hub is - $STATUS"
 done
 
 # Run tests
 #mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=$TYPE -DHUB_HOST=$HUB_HOST -DBROWSER=$BROWSER
-mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=@UI -DHUB_HOST=$SE_EVENT_BUS_HOST -DBROWSER="chrome"
+mvn test -Dtest=TestRunnerUI -Dcucumber.filter.tags=@UI -DHUB_HOST=http://192.168.60.2:32001/wd/hub -DBROWSER="chrome"
 
 
 #docker ps
