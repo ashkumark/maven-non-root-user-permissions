@@ -5,12 +5,12 @@ echo "Container  *-api-test-service-run-* created and alive...."
 
 echo "Run automated API tests (using runner script)..."
 
-whoami
+#whoami
 pwd
 ls -lrt
 mvn -version
 
-docker ps
+#docker ps
 #chown -R 1001:1001 /home/jenkins
 
 #mvn -f pom.xml test -Dtest=TestRunner -Dcucumber.filter.tags=@API
@@ -19,7 +19,7 @@ mvn test -Dtest=TestRunnerAPI -Dcucumber.filter.tags=@API
 #mvn test -Dcucumber.filter.tags=@API
 echo "API tests run completed..."
 
-docker ps
+#docker ps
 
 #version 2 - copy target from container to host
 
