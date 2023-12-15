@@ -18,7 +18,7 @@ echo "Validate hub status.."
 STATUS=false
 selenium_hub=192.168.60.2
 port=32001
-hub_host_url="http://$selenium_hub:$port/wd/hub"
+hub_host_url=http://$selenium_hub:$port/wd/hub
 
 echo "Loop until the hub status is true.."
 while [ $STATUS != true ]
