@@ -16,7 +16,8 @@ echo "Browser - $BROWSER"
 echo "Validate hub status.."
 
 STATUS=false
-selenium_hub_ip=192.168.60.2
+#selenium_hub_ip=192.168.60.2
+selenium_hub_ip=34.147.235.106
 port=32001
 hub_host_url=http://${selenium_hub_ip}:${port}/wd/hub
 
