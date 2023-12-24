@@ -2,14 +2,16 @@ FROM ghcr.io/carlossg/maven:3.9.5-eclipse-temurin-17
 
 
 ARG USER_ID
+ARG USER_NAME
 ENV uid $USER_ID
+ENV uname $USER_NAME
 
 ENV JENKINS_HOME=/home/$user
 
 RUN apt-get update
 RUN apt-get install -y wget curl jq unzip sudo tar acl apt-transport-https ca-certificates software-properties-common --no-install-recommends
 
-RUN usermod -aG sudo ${uid}
+RUN usermod -aG sudo ${uname}
 
 #Docker - https://docs.docker.com/engine/api/
 ENV DOCKER_CHANNEL stable
@@ -19,7 +21,7 @@ RUN curl -k -fsSL "https://download.docker.com/linux/static/${DOCKER_CHANNEL}/x8
 | tar -xzC /usr/local/bin --strip=1 docker/docker
 
 RUN groupadd docker
-RUN usermod -aG docker ${uid}
+RUN usermod -aG docker ${uname}
 
 #Docker compose - https://docs.docker.com/compose/release-notes/
 ENV DOCKER_COMPOSE_VERSION v2.23.0
