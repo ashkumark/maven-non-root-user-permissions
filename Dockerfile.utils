@@ -5,11 +5,10 @@ ARG USER_NAME
 ENV uid $USER_ID
 ENV uname $USER_NAME
 
-ENV JENKINS_HOME=/home/$user
+ENV JENKINS_HOME=/home/$uname
 
 #User + Group
-RUN groupadd $uname -g $uid \
-    && useradd -m $uname -u $uid -g $uid -d $JENKINS_HOME
+RUN groupadd $uname -g $uid && useradd -m $uname -u $uid -g $uid -d $JENKINS_HOME
 
 RUN usermod -aG sudo $uname
 
