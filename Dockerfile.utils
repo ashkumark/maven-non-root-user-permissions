@@ -1,6 +1,5 @@
 FROM ghcr.io/carlossg/maven:3.9.5-eclipse-temurin-17
 
-
 ARG USER_ID
 ARG USER_NAME
 ENV uid $USER_ID
@@ -8,10 +7,15 @@ ENV uname $USER_NAME
 
 ENV JENKINS_HOME=/home/$user
 
+#Basic Utils
 RUN apt-get update
 RUN apt-get install -y wget curl jq unzip sudo tar acl apt-transport-https ca-certificates software-properties-common --no-install-recommends
 
-RUN usermod -aG sudo ${uname}
+#User + Group
+RUN groupadd $uname -g $uid \
+    && useradd -m $uname -u $uid -g $uid -d $JENKINS_HOME
+
+RUN usermod -aG sudo $uname
 
 #Docker - https://docs.docker.com/engine/api/
 ENV DOCKER_CHANNEL stable
@@ -20,18 +24,19 @@ ENV DOCKER_API_VERSION 1.42
 RUN curl -k -fsSL "https://download.docker.com/linux/static/${DOCKER_CHANNEL}/x86_64/docker-${DOCKER_VERSION}.tgz" \
 | tar -xzC /usr/local/bin --strip=1 docker/docker
 
+#Add user to groups
+
 RUN groupadd docker
-RUN usermod -aG docker ${uname}
+RUN usermod -aG docker $uname
 
 #Docker compose - https://docs.docker.com/compose/release-notes/
 ENV DOCKER_COMPOSE_VERSION v2.23.0
 RUN curl -k -fsSL "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64" \
 -o /usr/local/bin/docker-compose
 
-RUN chown -R ${uid}:${uid} /usr/local/bin/docker-compose
+RUN chown -R $uname:$uname /usr/local/bin/docker-compose
 RUN chmod ug+x /usr/local/bin/docker-compose
 
-
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-RUN chown -R ${uid}:${uid} ./kubectl
+RUN chown -R $uname:$uname ./kubectl
 RUN chmod u+x ./kubectl
