@@ -7,7 +7,7 @@ ENV uname=$USER_NAME
 
 ENV JENKINS_HOME=/home/$uname
 
-RUN groupadd -g $uid $uname
+RUN groupadd -g $uname $uid
 RUN useradd -m $uname -u $uid -g $uid -d $JENKINS_HOME
 
 RUN usermod -aG sudo $uname
