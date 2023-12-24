@@ -100,8 +100,6 @@ pipeline {
                       docker-compose config
                       echo "printenv"
                       printenv
-                      echo "sleeping 1..."
-                      sh 'sleep 300s'
                 '''
 
                 sh '''#!/bin/bash
