@@ -2,12 +2,12 @@ FROM ghcr.io/carlossg/maven:3.9.5-eclipse-temurin-17
 
 ARG USER_ID
 ARG USER_NAME
-ENV uid=1000
-ENV uname=ubuntu
+ENV uid=$USER_ID
+ENV uname=$USER_NAME
 
 ENV JENKINS_HOME=/home/$uname
 
-RUN groupadd -g $uname $uid
+RUN groupadd -g ${uname} ${uid}
 RUN useradd -m $uname -u $uid -g $uid -d $JENKINS_HOME
 
 RUN usermod -aG sudo $uname
