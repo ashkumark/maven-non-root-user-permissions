@@ -7,15 +7,15 @@ ENV uname $USER_NAME
 
 ENV JENKINS_HOME=/home/$user
 
-#Basic Utils
-RUN apt-get update
-RUN apt-get install -y wget curl jq unzip sudo tar acl apt-transport-https ca-certificates software-properties-common --no-install-recommends
-
 #User + Group
 RUN groupadd $uname -g $uid \
     && useradd -m $uname -u $uid -g $uid -d $JENKINS_HOME
 
 RUN usermod -aG sudo $uname
+
+#Basic Utils
+RUN apt-get update
+RUN apt-get install -y wget curl jq unzip sudo tar acl apt-transport-https ca-certificates software-properties-common --no-install-recommends
 
 #Docker - https://docs.docker.com/engine/api/
 ENV DOCKER_CHANNEL stable
