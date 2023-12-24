@@ -5,10 +5,11 @@ metadata:
   namespace: devops-tools
 spec:
   initContainers:
-    - name: volume-mount-non-root-user-permission
+    - name: volume-mount-non-root-user
       image: alpine:3.6
-      command: ["chown", "-R", "1001:1001", "/root/.m2"]
-      command: ["chown", "-R", "1001:1001", "/var/run/docker.sock"]
+      command: ["/bin/bash","-c","chown -R 1001:1001 /root/.m2 && chown -R 1001:1001 /var/run/docker.sock && chmod -R ug+rwx /root/.m2"]
+      #command: ["chown", "-R", "1001:1001", "/root/.m2"]
+      #command: ["chown", "-R", "1001:1001", "/var/run/docker.sock"]
       volumeMounts:
         - name: m2-home
           mountPath: /root/.m2
