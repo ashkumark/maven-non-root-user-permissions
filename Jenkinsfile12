@@ -1,0 +1,147 @@
+pipeline {
+    agent { label 'jenkins-agent' }
+
+    environment {
+        JENKINS_USER_ID = "${sh(script: 'id -u', returnStdout: true).trim()}"
+        JENKINS_GROUP_ID = "${sh(script: 'id -g', returnStdout: true).trim()}"
+        JENKINS_USER_NAME = "${sh(script: 'id -un', returnStdout: true).trim()}"
+        JENKINS_GROUP_NAME = "${sh(script: 'id -gn', returnStdout: true).trim()}"
+        currentWorkspace = "$WORKSPACE"
+        REPO = 'ashkumarkdocker/docker-jenkins-automation'
+        VERSION = "${env.BUILD_ID}"
+    }
+
+    options {
+        timeout(time: 10, unit: 'MINUTES')
+    }
+
+    stages {
+        stage("Check Docker version") {
+            steps {
+                echo 'JENKINS_USER_ID'
+                echo env.JENKINS_USER_ID
+                echo 'JENKINS_USER_NAME'
+                echo env.JENKINS_USER_NAME
+                sh '''
+                  docker version
+                  docker info
+                  sudo chown -R ${JENKINS_USER_NAME}:${JENKINS_USER_NAME} /var/run/docker.sock
+                  sudo chmod -R ug+rwx /var/run/docker.sock
+                '''
+            }
+        }
+
+        stage('Docker System Prune') {
+            steps {
+                sh 'docker system prune -a --volumes -f'
+            }
+        }
+
+        stage('Checkout from SCM') {
+            steps {
+                git branch: 'master', credentialsId: 'GitHub', url: 'https://github.com/ashkumark/maven-non-root-user-permissions.git'
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                script {
+                    sh 'docker build -f Dockerfile.utils -t ${REPO}:${VERSION} . --build-arg USER_ID=${JENKINS_USER_ID} --build-arg USER_NAME=${JENKINS_USER_NAME}'
+                    echo "image built"
+                    sh 'docker image ls'
+                    echo "Current workspace is ${currentWorkspace}"
+                }
+            }
+        }
+
+        stage('API Automation') {
+            agent {
+/*                dockerfile {
+                    filename 'Dockerfile.utils'
+                    //args '-v $HOME/.m2:/root/.m2'
+					additionalBuildArgs '--build-arg USER_ID=${JENKINS_USER_ID} --build-arg USER_NAME=${JENKINS_USER_NAME} -t ${dockerImage}'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    //args '-t docker-jenkins-automation:latest'
+                    //args '-t ${dockerImage}'
+                    //image:${env.BUILD_ID}
+                    reuseNode true
+                }*/
+
+                docker {
+                    image "${REPO}:${VERSION}"
+                    args '-v $HOME/.m2:/root/.m2'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''#!/bin/bash
+                      echo "Check permissions"
+                      echo "* Reuse node using new image "
+                      echo "Within container using workspace as working directory.."
+                      //whoami
+                      pwd
+                      ls -lrt
+                      echo "Docker images and containers"
+                      docker images
+                      docker ps 
+                      docker-compose config
+                      echo "printenv"
+                      printenv
+                '''
+
+                sh '''#!/bin/bash
+                        echo "Change script permissions"
+                        chmod ug+x ./run-api-tests.sh
+                        chmod ug+x ./runner-api.sh
+
+                        echo "run-api-tests.sh.."                        
+                        ./run-api-tests.sh
+                        docker ps 
+                '''
+            }
+        }
+
+        stage('Generate HTML report') {
+            steps {
+                cucumber buildStatus: '',
+                        reportTitle: 'Cucumber report',
+                        fileIncludePattern: '**/*.json',
+                        jsonReportDirectory: "${currentWorkspace}/target",
+                        trendsLimit: 10,
+                        classifications: [
+                                [
+                                        'key'  : 'API',
+                                        'value': 'API'
+                                ]
+                        ]
+            }
+        }
+    }
+
+    post {
+        always {
+            // publish html reports
+            publishHTML target: [
+                    allowMissing         : false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll              : true,
+                    reportDir            : "${currentWorkspace}/target/Reports/",
+                    reportFiles          : 'automated-test-report.html',
+                    reportName           : 'Extent Test Report'
+            ]
+            publishHTML target: [
+                    allowMissing         : false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll              : true,
+                    reportDir            : "${currentWorkspace}/target/cucumber-html-report/",
+                    reportFiles          : 'regression-tests.html',
+                    reportName           : 'Cucumber Test Report'
+            ]
+
+            archiveArtifacts artifacts: 'target/Reports/automated-test-report.html', fingerprint: true
+
+            cleanWs()
+        }
+    }
+}
