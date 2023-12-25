@@ -17,6 +17,8 @@ services:
       - rest
     environment:
       - TYPE="@API"
+      - _JAVA_OPTIONS=-Duser.home=/tmp
+      - MAVEN_CONFIG=/tmp
 #      - MAVEN_CONFIG=/usr/share/maven/.m2
 #      - Duser.home=/usr/share/maven
     volumes:
